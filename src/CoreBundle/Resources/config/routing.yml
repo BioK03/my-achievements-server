@@ -1,0 +1,11 @@
+core_homepage:
+    path:     /
+    defaults: { _controller: CoreBundle:Default:index }
+
+users:
+    type:     rest
+    resource: CoreBundle\Controller\UserController
+
+tabs:
+    type:     rest
+    resource: CoreBundle\Controller\User\TabController

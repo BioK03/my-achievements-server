@@ -1,11 +1,15 @@
 # To get started with security, check out the documentation:
 # http://symfony.com/doc/current/book/security.html
 security:
+    encoders:
+        MA\UserBundle\Entity\User: sha512
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory:
-            memory: ~
+        main:
+            entity:
+                class: MA\UserBundle\Entity\User
+                property: username
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -14,7 +18,9 @@ security:
             security: false
 
         main:
-            anonymous: ~
+            pattern: ^/
+            anonymous: true
+            provider: main
             # activate different ways to authenticate
 
             # http_basic: ~

@@ -1,0 +1,13 @@
+CoreBundle\Entity\User:
+    exclusion_policy: none
+    properties:
+        id:
+            groups: ['user', 'tab']
+        firstname:
+            groups: ['user', 'tab', 'post']
+        lastname:
+            groups: ['user', 'tab', 'post']
+        email:
+            groups: ['user', 'tab', 'post']
+        tabs:
+            groups: ['user']

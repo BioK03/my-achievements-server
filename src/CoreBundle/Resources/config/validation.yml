@@ -1,0 +1,21 @@
+CoreBundle\Entity\User:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: email
+    properties:
+        firstname:
+            - NotBlank: ~
+            - Type: string
+        lastname:
+            - NotBlank: ~
+            - Type: string
+        email:
+            - NotBlank: ~
+            - Email: ~
+        tabs:
+            - Valid: ~
+
+CoreBundle\Entity\Tab:
+    properties:
+        name:
+            - NotBlank: ~
+            - Type: string

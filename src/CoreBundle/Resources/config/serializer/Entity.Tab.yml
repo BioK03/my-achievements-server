@@ -1,0 +1,10 @@
+CoreBundle\Entity\Tab:
+    exclusion_policy: none
+    properties:
+        id:
+            groups: ['tab', 'user']
+        name:
+            groups: ['tab', 'user', 'post']
+        user:
+            groups: ['tab']
+
