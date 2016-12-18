@@ -9,3 +9,7 @@ users:
 tabs:
     type:     rest
     resource: CoreBundle\Controller\User\TabController
+
+achievements:
+    type:     rest
+    resource: CoreBundle\Controller\User\AchievementController

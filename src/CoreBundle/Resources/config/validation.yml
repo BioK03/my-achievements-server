@@ -19,3 +19,38 @@ CoreBundle\Entity\Tab:
         name:
             - NotBlank: ~
             - Type: string
+        color:
+            - NotBlank: ~
+            - Type: string
+        order:
+            - NotBlank: ~
+            - Type: integer
+        icon:
+            - NotBlank: ~
+            - Type: string
+        achievements:
+            - Valid: ~
+
+CoreBundle\Entity\Achievement:
+    properties:
+        name:
+            - NotBlank: ~
+            - Type: string
+        color:
+            - NotBlank: ~
+            - Type: string
+        order:
+            - NotBlank: ~
+            - Type: integer
+        icon:
+            - NotBlank: ~
+            - Type: string
+        favorite:
+            - NotBlank: ~
+            - Type: bool
+        shortdesc:
+            - NotBlank: ~
+            - Type: string
+        longdesc:
+            - NotBlank: ~
+            - Type: string

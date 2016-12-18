@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TabType extends AbstractType
+class AchievementType extends AbstractType
 {
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -15,17 +15,15 @@ class TabType extends AbstractType
         $builder->add('color');
         $builder->add('order');
         $builder->add('icon');
-        $builder->add('achievements', CollectionType::class, [
-            'entry_type' => AchievementType::class,
-            'allow_add' => true,
-            'error_bubbling' => false,
-        ]);
+        $builder->add('shortdesc');
+        $builder->add('longdesc');
+        $builder->add('favorite');
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'CoreBundle\Entity\Tab',
+            'data_class' => 'CoreBundle\Entity\Achievement',
             'csrf_protection' => false
         ]);
     }

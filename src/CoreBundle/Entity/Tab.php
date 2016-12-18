@@ -24,10 +24,31 @@ class Tab
     protected $name;
 
     /**
+     * @ORM\Column(type="string")
+     */
+    protected $color;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $order;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $icon;
+
+    /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="tabs")
      * @var User
      */
     protected $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Achievement", mappedBy="tab")
+     * @var Achievement[]
+     */
+    protected $achievements;
 
     function getId()
     {
@@ -57,5 +78,45 @@ class Tab
     function setUser(User $user)
     {
         $this->user = $user;
+    }
+
+    function getColor()
+    {
+        return $this->color;
+    }
+
+    function getOrder()
+    {
+        return $this->order;
+    }
+
+    function getIcon()
+    {
+        return $this->icon;
+    }
+
+    function setColor($color)
+    {
+        $this->color = $color;
+    }
+
+    function setOrder($order)
+    {
+        $this->order = $order;
+    }
+
+    function setIcon($icon)
+    {
+        $this->icon = $icon;
+    }
+
+    function getAchievements()
+    {
+        return $this->achievements;
+    }
+
+    function setAchievements(array $achievements)
+    {
+        $this->achievements = $achievements;
     }
 }

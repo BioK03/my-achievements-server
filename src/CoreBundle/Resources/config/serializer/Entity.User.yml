@@ -2,12 +2,12 @@ CoreBundle\Entity\User:
     exclusion_policy: none
     properties:
         id:
-            groups: ['user', 'tab']
+            groups: ['user', 'tab', 'achievement']
         firstname:
-            groups: ['user', 'tab', 'post']
+            groups: ['user', 'tab', 'post', 'achievement']
         lastname:
-            groups: ['user', 'tab', 'post']
+            groups: ['user', 'tab', 'post', 'achievement']
         email:
-            groups: ['user', 'tab', 'post']
+            groups: ['user', 'tab', 'post', 'achievement']
         tabs:
             groups: ['user']

@@ -1,4 +1,4 @@
-CoreBundle\Entity\Tab:
+CoreBundle\Entity\Achievement:
     exclusion_policy: none
     properties:
         id:
@@ -11,8 +11,13 @@ CoreBundle\Entity\Tab:
             groups: ['tab', 'user', 'post', 'achievement']
         icon:
             groups: ['tab', 'user', 'post', 'achievement']
-        achievements:
-            groups: ['tab', 'user', 'post']
-        user:
-            groups: ['tab', 'achievement']
+        shortdesc:
+            groups: ['tab', 'user', 'post', 'achievement']
+        longdesc:
+            groups: ['tab', 'user', 'post', 'achievement']
+        favorite:
+            groups: ['tab', 'user', 'post', 'achievement']
+        tab:
+            groups: ['achievement']
+
 
