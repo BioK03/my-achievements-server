@@ -9,5 +9,7 @@ CoreBundle\Entity\User:
             groups: ['user', 'tab', 'post', 'achievement']
         email:
             groups: ['user', 'tab', 'post', 'achievement']
+        plainPassword:
+            groups: ['post']
         tabs:
             groups: ['user']

@@ -2,6 +2,16 @@ core_homepage:
     path:     /
     defaults: { _controller: CoreBundle:Default:index }
 
+post_login:
+    path:     /login
+    methods: [POST]
+    defaults: { _controller: CoreBundle:User:postLogin }
+
+post_logout:
+    path:     /users/{user_id}/logout
+    methods: [POST]
+    defaults: { _controller: CoreBundle:User:postLogout }
+
 users:
     type:     rest
     resource: CoreBundle\Controller\UserController

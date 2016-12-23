@@ -7,7 +7,7 @@ CoreBundle\Entity\Tab:
             groups: ['tab', 'user', 'post', 'achievement']
         color:
             groups: ['tab', 'user', 'post', 'achievement']
-        order:
+        orderNumber:
             groups: ['tab', 'user', 'post', 'achievement']
         icon:
             groups: ['tab', 'user', 'post', 'achievement']

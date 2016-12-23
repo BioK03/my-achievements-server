@@ -5,6 +5,7 @@ namespace CoreBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class TabType extends AbstractType
 {
@@ -13,7 +14,7 @@ class TabType extends AbstractType
     {
         $builder->add('name');
         $builder->add('color');
-        $builder->add('order');
+        $builder->add('orderNumber');
         $builder->add('icon');
         $builder->add('achievements', CollectionType::class, [
             'entry_type' => AchievementType::class,

@@ -4,7 +4,6 @@ namespace CoreBundle\Controller\User;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,8 +11,9 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use CoreBundle\Form\Type\TabType;
 use CoreBundle\Entity\Tab;
+use CoreBundle\Controller\BaseController;
 
-class TabController extends Controller
+class TabController extends BaseController
 {
 
     /**
@@ -79,6 +79,10 @@ class TabController extends Controller
 
         if ($form->isValid()) {
             $em = $this->get('doctrine.orm.entity_manager');
+            foreach ($tab->getAchievements() as $achievement) {
+                $achievement->setTab($tab);
+                $em->persist($achievement);
+            }
             $em->persist($tab);
             $em->flush();
             return $tab;
@@ -183,20 +187,5 @@ class TabController extends Controller
         } else {
             return $form;
         }
-    }
-
-    private function userNotFound()
-    {
-        return \FOS\RestBundle\View\View::create(['message' => 'User not found'], Response::HTTP_NOT_FOUND);
-    }
-
-    private function tabNotFound()
-    {
-        return \FOS\RestBundle\View\View::create(['message' => 'Tab not found'], Response::HTTP_NOT_FOUND);
-    }
-
-    private function userNotCorrect()
-    {
-        return \FOS\RestBundle\View\View::create(['message' => 'This tab not belong to this user.'], Response::HTTP_METHOD_NOT_ALLOWED);
     }
 }

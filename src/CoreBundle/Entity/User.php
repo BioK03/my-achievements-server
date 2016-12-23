@@ -2,16 +2,15 @@
 
 namespace CoreBundle\Entity;
 
+use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="users",
- *      uniqueConstraints={@ORM\UniqueConstraint(name="users_email_unique",columns={"email"})}
- * )
+ * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(name="users_email_unique",columns={"email"})})
  */
-class User
+class User implements UserInterface
 {
 
     /**
@@ -37,10 +36,46 @@ class User
     protected $email;
 
     /**
+     * @ORM\Column(type="string")
+     */
+    protected $password;
+    protected $plainPassword;
+
+    /**
      * @ORM\OneToMany(targetEntity="Tab", mappedBy="user")
      * @var Tab[]
      */
     protected $tabs;
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+
+    public function getRoles()
+    {
+        return [];
+    }
+
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function getUsername()
+    {
+        return $this->email;
+    }
+
+    public function eraseCredentials()
+    {
+        $this->plainPassword = null;
+    }
 
     public function __construct()
     {
@@ -95,5 +130,15 @@ class User
     function setTabs(array $tabs)
     {
         $this->tabs = $tabs;
+    }
+
+    function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
     }
 }

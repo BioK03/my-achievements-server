@@ -11,6 +11,12 @@ CoreBundle\Entity\User:
         email:
             - NotBlank: ~
             - Email: ~
+        plainPassword:
+            - NotBlank: { groups: [New, FullUpdate] }
+            - Type: string
+            - Length:
+                min: 4
+                max: 50
         tabs:
             - Valid: ~
 
@@ -22,7 +28,7 @@ CoreBundle\Entity\Tab:
         color:
             - NotBlank: ~
             - Type: string
-        order:
+        orderNumber:
             - NotBlank: ~
             - Type: integer
         icon:
@@ -52,5 +58,14 @@ CoreBundle\Entity\Achievement:
             - NotBlank: ~
             - Type: string
         longdesc:
+            - NotBlank: ~
+            - Type: string
+
+CoreBundle\Entity\Credentials:
+    properties:
+        login:
+            - NotBlank: ~
+            - Type: string
+        password:
             - NotBlank: ~
             - Type: string

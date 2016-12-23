@@ -4,7 +4,6 @@ namespace CoreBundle\Controller\User;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,8 +11,9 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use CoreBundle\Form\Type\AchievementType;
 use CoreBundle\Entity\Achievement;
+use CoreBundle\Controller\BaseController;
 
-class AchievementController extends Controller
+class AchievementController extends BaseController
 {
 
     /**
@@ -194,25 +194,5 @@ class AchievementController extends Controller
         } else {
             return $form;
         }
-    }
-
-    private function tabNotFound()
-    {
-        return \FOS\RestBundle\View\View::create(['message' => 'Tab not found'], Response::HTTP_NOT_FOUND);
-    }
-
-    private function achievementNotFound()
-    {
-        return \FOS\RestBundle\View\View::create(['message' => 'Achievement not found'], Response::HTTP_NOT_FOUND);
-    }
-
-    private function userNotCorrect()
-    {
-        return \FOS\RestBundle\View\View::create(['message' => 'The tab of this achievement not belong to this user.'], Response::HTTP_METHOD_NOT_ALLOWED);
-    }
-
-    private function tabNotCorrect()
-    {
-        return \FOS\RestBundle\View\View::create(['message' => 'This achievement not belong to this tab.'], Response::HTTP_METHOD_NOT_ALLOWED);
     }
 }

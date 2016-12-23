@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="tabs")
+ * @ORM\Table(name="tabs", uniqueConstraints={@ORM\UniqueConstraint(name="order_unique",columns={"order_number", "user_id"})}))
  */
 class Tab
 {
@@ -31,7 +31,7 @@ class Tab
     /**
      * @ORM\Column(type="integer")
      */
-    protected $order;
+    protected $orderNumber;
 
     /**
      * @ORM\Column(type="string")
@@ -85,9 +85,9 @@ class Tab
         return $this->color;
     }
 
-    function getOrder()
+    function getOrderNumber()
     {
-        return $this->order;
+        return $this->orderNumber;
     }
 
     function getIcon()
@@ -100,9 +100,9 @@ class Tab
         $this->color = $color;
     }
 
-    function setOrder($order)
+    function setOrderNumber($order)
     {
-        $this->order = $order;
+        $this->orderNumber = $order;
     }
 
     function setIcon($icon)

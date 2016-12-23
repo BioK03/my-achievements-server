@@ -15,6 +15,7 @@ class UserType extends AbstractType
     {
         $builder->add('firstname');
         $builder->add('lastname');
+        $builder->add('plainPassword');
         $builder->add('email', EmailType::class);
         $builder->add('tabs', CollectionType::class, [
             'entry_type' => TabType::class,
