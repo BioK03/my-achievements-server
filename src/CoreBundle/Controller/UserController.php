@@ -70,7 +70,8 @@ class UserController extends BaseController
      *  section="users",
      *  output={
      *      "class"="CoreBundle\Entity\User",
-     *      "groups"={"user"}
+     *      "groups"={"user"},
+     *      "parsers"={"Nelmio\ApiDocBundle\Parser\JmsMetadataParser"}
      *  }
      * )
      *
@@ -152,7 +153,7 @@ class UserController extends BaseController
      */
     public function postLogoutAction(Request $request)
     {
-        $request->getSession()->remove("$user_id");
+        $request->getSession()->remove("user_id");
         return $this->ok("Logout succes");
     }
 

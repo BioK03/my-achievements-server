@@ -12,8 +12,7 @@ class AchievementType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name');
-        $builder->add('color');
-        $builder->add('order');
+        $builder->add('orderNumber');
         $builder->add('icon');
         $builder->add('shortdesc');
         $builder->add('longdesc');

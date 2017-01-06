@@ -24,14 +24,9 @@ class Achievement
     protected $name;
 
     /**
-     * @ORM\Column(type="string")
-     */
-    protected $color;
-
-    /**
      * @ORM\Column(type="integer")
      */
-    protected $order;
+    protected $orderNumber;
 
     /**
      * @ORM\Column(type="string")
@@ -69,14 +64,9 @@ class Achievement
         return $this->name;
     }
 
-    function getColor()
+    function getOrderNumber()
     {
-        return $this->color;
-    }
-
-    function getOrder()
-    {
-        return $this->order;
+        return $this->orderNumber;
     }
 
     function getIcon()
@@ -114,14 +104,9 @@ class Achievement
         $this->name = $name;
     }
 
-    function setColor($color)
+    function setOrderNumber($order)
     {
-        $this->color = $color;
-    }
-
-    function setOrder($order)
-    {
-        $this->order = $order;
+        $this->orderNumber = $order;
     }
 
     function setIcon($icon)

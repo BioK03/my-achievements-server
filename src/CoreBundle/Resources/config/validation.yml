@@ -42,10 +42,7 @@ CoreBundle\Entity\Achievement:
         name:
             - NotBlank: ~
             - Type: string
-        color:
-            - NotBlank: ~
-            - Type: string
-        order:
+        orderNumber:
             - NotBlank: ~
             - Type: integer
         icon:
