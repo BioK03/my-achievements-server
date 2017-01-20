@@ -22,7 +22,7 @@ class UserController extends BaseController
      * Add a user (=sign in)
      * @ApiDoc(
      *  description="Add a user",
-     *  section="users",
+     *  section="Users",
      *  input={
      *      "class"="CoreBundle\Entity\User",
      *      "groups"={"post"}
@@ -67,7 +67,7 @@ class UserController extends BaseController
      * Get a user by id
      * @ApiDoc(
      *  description="Get a user by id",
-     *  section="users",
+     *  section="Users",
      *  output={
      *      "class"="CoreBundle\Entity\User",
      *      "groups"={"user"},
@@ -95,7 +95,7 @@ class UserController extends BaseController
      * Login
      * @ApiDoc(
      *  description="Login",
-     *  section="security",
+     *  section="Security",
      *  input={
      *      "class"="CoreBundle\Entity\Credentials"
      *  }
@@ -145,7 +145,7 @@ class UserController extends BaseController
     /** Logout
      * @ApiDoc(
      *  description="Logout",
-     *  section="security"
+     *  section="Security"
      * )
      *
      * @Rest\View(statusCode=Response::HTTP_OK)
@@ -161,7 +161,7 @@ class UserController extends BaseController
      * Remove a user by id
      * @ApiDoc(
      *  description="Remove a user by id",
-     *  section="users")
+     *  section="Users")
      *
      * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
      * @Rest\Delete("/users/{user_id}")
@@ -185,7 +185,7 @@ class UserController extends BaseController
      * Complete update of a user
      * @ApiDoc(
      *  description="Complete update of a user",
-     *  section="users",
+     *  section="Users",
      *  input={
      *      "class"="CoreBundle\Entity\User",
      *      "groups"={"post"}
@@ -208,7 +208,7 @@ class UserController extends BaseController
      * Partial update of a user.
      * @ApiDoc(
      *  description="Partial update of a user",
-     *  section="users",
+     *  section="Users",
      *  input={
      *      "class"="CoreBundle\Entity\User",
      *      "groups"={"post"}

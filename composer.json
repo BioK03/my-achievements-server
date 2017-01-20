@@ -31,7 +31,7 @@
         "friendsofsymfony/rest-bundle": "^2.1",
         "jms/serializer-bundle": "^1.1",
         "nelmio/api-doc-bundle": "^2.13",
-        "nelmio/cors-bundle": "^"
+        "nelmio/cors-bundle": "^1.5.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

@@ -20,7 +20,7 @@ class TabController extends BaseController
      * Get all tabs for a user
      * @ApiDoc(
      *  description="Get all tabs for a user",
-     *  section="tabs",
+     *  section="Tabs",
      *  output={
      *      "class"="CoreBundle\Entity\Tab",
      *      "groups"={"tab"}
@@ -47,7 +47,7 @@ class TabController extends BaseController
      * Add tab(s) for a user
      * @ApiDoc(
      *  description="Add tab(s) for a user",
-     *  section="tabs",
+     *  section="Tabs",
      *  input={
      *      "class"="CoreBundle\Entity\Tab",
      *      "groups"={"post"}
@@ -95,7 +95,7 @@ class TabController extends BaseController
      * Remove a tab by id for a user
      * @ApiDoc(
      *  description="Remove a tab by id for a user",
-     *  section="tabs")
+     *  section="Tabs")
      *
      * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
      * @Rest\Delete("/users/{user_id}/tabs/{tab_id}")
@@ -119,7 +119,7 @@ class TabController extends BaseController
      * Complete update of a tab of a user
      * @ApiDoc(
      *  description="Complete update of a tab of a user",
-     *  section="tabs",
+     *  section="Tabs",
      *  input={
      *      "class"="CoreBundle\Entity\Tab",
      *      "groups"={"post"}
@@ -142,7 +142,7 @@ class TabController extends BaseController
      * Partial update of a tab of a user
      * @ApiDoc(
      *  description="Partial update of a tab of a user",
-     *  section="tabs",
+     *  section="Tabs",
      *  input={
      *      "class"="CoreBundle\Entity\Tab",
      *      "groups"={"post"}

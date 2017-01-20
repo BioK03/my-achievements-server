@@ -15,7 +15,7 @@ class DefaultController extends Controller
     /** Default
      * @ApiDoc(
      *  description="Default",
-     *  section="Default"
+     *  section=" 0-Default"
      * )
      *
      * @Rest\View(statusCode=Response::HTTP_OK)

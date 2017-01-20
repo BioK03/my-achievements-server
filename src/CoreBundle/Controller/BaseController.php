@@ -37,7 +37,7 @@ class BaseController extends Controller
 
     protected function invalidCredentials()
     {
-        return \FOS\RestBundle\View\View::create(['message' => 'Invalid credentials'], Response::HTTP_BAD_REQUEST);
+        return \FOS\RestBundle\View\View::create(['message' => 'Invalid credentials'], Response::HTTP_UNAUTHORIZED);
     }
 
     protected function ok($msg)
