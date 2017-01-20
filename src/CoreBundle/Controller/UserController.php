@@ -139,7 +139,7 @@ class UserController extends BaseController
             return $this->invalidCredentials();
         }
         $request->getSession()->set("user_id", $user->getId());
-        return $this->ok("Login succes");
+        return \FOS\RestBundle\View\View::create(['message' => "Login sucess", 'id' => $user->getId()], Response::HTTP_OK);
     }
 
     /** Logout
@@ -149,12 +149,12 @@ class UserController extends BaseController
      * )
      *
      * @Rest\View(statusCode=Response::HTTP_OK)
-     * @Rest\Post("/users/{user_id}/logout")
+     * @Rest\DELETE("/users/{user_id}/logout")
      */
     public function postLogoutAction(Request $request)
     {
         $request->getSession()->remove("user_id");
-        return $this->ok("Logout succes");
+        return $this->ok("Logout success");
     }
 
     /**
@@ -230,7 +230,7 @@ class UserController extends BaseController
     private function updateUser(Request $request, $clearMissing)
     {
         $user = $this->get('doctrine.orm.entity_manager')
-                ->getRepository('AppBundle:User')
+                ->getRepository('CoreBundle:User')
                 ->find($request->get('user_id'));
 
         if (empty($user)) {
