@@ -13,3 +13,5 @@ CoreBundle\Entity\User:
             groups: ['post']
         tabs:
             groups: ['user']
+        profilePicture:
+            groups: ['user', 'tab', 'achievement', 'post']

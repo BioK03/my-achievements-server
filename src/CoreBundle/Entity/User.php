@@ -42,6 +42,11 @@ class User implements UserInterface
     protected $plainPassword;
 
     /**
+     * @ORM\Column(type="string")
+     */
+    protected $profilePicture;
+
+    /**
      * @ORM\OneToMany(targetEntity="Tab", mappedBy="user")
      * @var Tab[]
      */

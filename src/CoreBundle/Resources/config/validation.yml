@@ -19,6 +19,8 @@ CoreBundle\Entity\User:
                 max: 50
         tabs:
             - Valid: ~
+        profilePicture:
+            - Type: string
 
 CoreBundle\Entity\Tab:
     properties:
