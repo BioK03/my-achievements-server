@@ -19,89 +19,23 @@ class UserController extends BaseController
 {
 
     /**
-     * Add a user (=sign in)
-     * @ApiDoc(
-     *  description="Add a user",
-     *  section="Users",
-     *  input={
-     *      "class"="CoreBundle\Entity\User",
-     *      "groups"={"post"}
-     *  },
-     * output={
-     *      "class"="CoreBundle\Entity\User"
-     *  }
-     * )
-     *
-     * @Rest\View(statusCode=Response::HTTP_CREATED, serializerGroups={"user"})
-     * @Rest\Post("/users")
-     */
-    public function postUsersAction(Request $request)
-    {
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user);
-
-        $form->submit($request->request->all());
-
-        if ($form->isValid()) {
-            $em = $this->get('doctrine.orm.entity_manager');
-            foreach ($user->getTabs() as $tab) {
-                $tab->setUser($user);
-                foreach ($tab->getAchievements() as $achievement) {
-                    $achievement->setTab($tab);
-                    $em->persist($achievement);
-                }
-                $em->persist($tab);
-            }
-            $encoder = $this->get('security.password_encoder');
-            $encoded = $encoder->encodePassword($user, $user->getPlainPassword());
-            $user->setPassword($encoded);
-            $em->persist($user);
-            $em->flush();
-            return $user;
-        } else {
-            return $form;
-        }
-    }
-
-    /**
-     * Get a user by id
-     * @ApiDoc(
-     *  description="Get a user by id",
-     *  section="Users",
-     *  output={
-     *      "class"="CoreBundle\Entity\User",
-     *      "groups"={"user"},
-     *      "parsers"={"Nelmio\ApiDocBundle\Parser\JmsMetadataParser"}
-     *  }
-     * )
-     *
-     * @Rest\View(serializerGroups={"user"})
-     * @Rest\Get("/users/{user_id}")
-     */
-    public function getUserAction(Request $request)
-    {
-        $user = $this->get('doctrine.orm.entity_manager')
-                ->getRepository('CoreBundle:User')
-                ->find($request->get('user_id'));
-
-        if (empty($user)) {
-            return $this->userNotFound();
-        }
-
-        return $user;
-    }
-
-    /**
      * Login
+     * Return :
+     * ['message' => "Login sucess",
+     * 'id' => user id,
+     * 'firstname' => use firstname,
+     * 'lastname' => user lastname,
+     * 'email' => user email,
+     * 'publicPicture' => user profilePicture]
+     *
      * @ApiDoc(
      *  description="Login",
-     *  section="Security",
+     *  section="1-Security",
      *  input={
      *      "class"="CoreBundle\Entity\Credentials"
      *  }
      * )
      *
-     * @Rest\View(statusCode=Response::HTTP_OK)
      * @Rest\Post("/login")
      */
     public function postLoginAction(Request $request)
@@ -139,16 +73,23 @@ class UserController extends BaseController
             return $this->invalidCredentials();
         }
         $request->getSession()->set("user_id", $user->getId());
-        return \FOS\RestBundle\View\View::create(['message' => "Login sucess", 'id' => $user->getId()], Response::HTTP_OK);
+        $ret = [
+            'message' => "Login sucess",
+            'id' => $user->getId(),
+            'firstname' => $user->getFirstname(),
+            'lastname' => $user->getLastname(),
+            'email' => $user->getEmail(),
+            'publicPicture' => $user->getProfilePicture()
+        ];
+        return \FOS\RestBundle\View\View::create($ret, Response::HTTP_OK);
     }
 
     /** Logout
      * @ApiDoc(
      *  description="Logout",
-     *  section="Security"
+     *  section="1-Security"
      * )
      *
-     * @Rest\View(statusCode=Response::HTTP_OK)
      * @Rest\DELETE("/users/{user_id}/logout")
      */
     public function postLogoutAction(Request $request)
@@ -158,12 +99,147 @@ class UserController extends BaseController
     }
 
     /**
+     * Get a profile user by id
+     * @ApiDoc(
+     *  description="Get a profile user by id",
+     *  section="2-Users",
+     *  output={
+     *      "class"="CoreBundle\Entity\User",
+     *      "groups"={"user"},
+     *      "parsers"={"Nelmio\ApiDocBundle\Parser\JmsMetadataParser"}
+     *  }
+     * )
+     *
+     * @Rest\View(serializerGroups={"user"})
+     * @Rest\Get("/userprofiles/{user_id}")
+     */
+    public function getPublicUserAction(Request $request)
+    {
+        $user = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CoreBundle:User')
+                ->find($request->get('user_id'));
+
+        if (empty($user)) {
+            return $this->userNotFound();
+        }
+        if ($request->getSession()->get('user_id')) {
+            return $user;
+        } else {
+            $ret = [
+                'id' => $user->getId(),
+                'firstname' => $user->getFirstname(),
+                'lastname' => $user->getLastname(),
+                'email' => $user->getEmail(),
+                'publicPicture' => $user->getProfilePicture(),
+                'tabs' => []
+            ];
+
+            foreach ($user->getTabs() as $t) {
+                $tab = [
+                    'id' => $t->getId(),
+                    'name' => $t->getName(),
+                    'color' => $t->getColor(),
+                    'orderNumber' => $t->getOrderNumber(),
+                    'icon' => $t->getIcon(),
+                    'achievements' => []
+                ];
+                $achievements = $this->get('doctrine.orm.entity_manager')->getRepository('CoreBundle:Achievement')->findBy(['tab' => $t, 'favorite' => true], ['orderNumber' => 'desc']);
+                foreach ($achievements as $a) {
+                    $tab['achievements'][] = [
+                        'id' => $a->getId(),
+                        'name' => $a->getName(),
+                        'orderNumber' => $a->getOrderNumber(),
+                        'icon' => $a->getIcon(),
+                        'shortdesc' => $a->getShortdesc(),
+                        'longdesc' => $a->getLongdesc(),
+                        'favorite' => $a->getFavorite(),
+                    ];
+                }
+                $ret['tabs'][] = $tab;
+            }
+            return \FOS\RestBundle\View\View::create($ret, Response::HTTP_OK);
+        }
+    }
+
+    /**
+     * Add a user (=sign in)
+     * @ApiDoc(
+     *  description="Add a user",
+     *  section="2-Users",
+     *  input={
+     *      "class"="CoreBundle\Entity\User",
+     *      "groups"={"post"}
+     *  },
+     * output={
+     *      "class"="CoreBundle\Entity\User"
+     *  }
+     * )
+     *
+     * @Rest\View(serializerGroups={"user"})
+     * @Rest\Post("/users")
+     */
+    public function postUsersAction(Request $request)
+    {
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user);
+
+        $form->submit($request->request->all());
+
+        if ($form->isValid()) {
+            $em = $this->get('doctrine.orm.entity_manager');
+            foreach ($user->getTabs() as $tab) {
+                $tab->setUser($user);
+                foreach ($tab->getAchievements() as $achievement) {
+                    $achievement->setTab($tab);
+                    $em->persist($achievement);
+                }
+                $em->persist($tab);
+            }
+            $encoder = $this->get('security.password_encoder');
+            $encoded = $encoder->encodePassword($user, $user->getPlainPassword());
+            $user->setPassword($encoded);
+            $em->persist($user);
+            $em->flush();
+            return $user;
+        } else {
+            return $form;
+        }
+    }
+
+    /**
+     * Get a user by id
+     * @ApiDoc(
+     *  description="Get a user by id",
+     *  section="2-Users",
+     *  output={
+     *      "class"="CoreBundle\Entity\User",
+     *      "groups"={"user"},
+     *      "parsers"={"Nelmio\ApiDocBundle\Parser\JmsMetadataParser"}
+     *  }
+     * )
+     *
+     * @Rest\View(serializerGroups={"user"})
+     * @Rest\Get("/users/{user_id}")
+     */
+    public function getUserAction(Request $request)
+    {
+        $user = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CoreBundle:User')
+                ->find($request->get('user_id'));
+
+        if (empty($user)) {
+            return $this->userNotFound();
+        }
+
+        return $user;
+    }
+
+    /**
      * Remove a user by id
      * @ApiDoc(
      *  description="Remove a user by id",
-     *  section="Users")
+     *  section="2-Users")
      *
-     * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
      * @Rest\Delete("/users/{user_id}")
      */
     public function removeUserAction(Request $request)
@@ -185,7 +261,7 @@ class UserController extends BaseController
      * Complete update of a user
      * @ApiDoc(
      *  description="Complete update of a user",
-     *  section="Users",
+     *  section="2-Users",
      *  input={
      *      "class"="CoreBundle\Entity\User",
      *      "groups"={"post"}
@@ -208,7 +284,7 @@ class UserController extends BaseController
      * Partial update of a user.
      * @ApiDoc(
      *  description="Partial update of a user",
-     *  section="Users",
+     *  section="2-Users",
      *  input={
      *      "class"="CoreBundle\Entity\User",
      *      "groups"={"post"}

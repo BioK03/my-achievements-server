@@ -52,6 +52,16 @@ class User implements UserInterface
      */
     protected $tabs;
 
+    function getProfilePicture()
+    {
+        return $this->profilePicture;
+    }
+
+    function setProfilePicture($profilePicture)
+    {
+        $this->profilePicture = $profilePicture;
+    }
+
     public function getPassword()
     {
         return $this->password;

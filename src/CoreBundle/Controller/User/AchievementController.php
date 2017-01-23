@@ -20,7 +20,7 @@ class AchievementController extends BaseController
      * Get all achievements for a achievement of a user
      * @ApiDoc(
      *  description="Get all achievements for a achievement of a user",
-     *  section="Achievements",
+     *  section="4-Achievements",
      *  output={
      *      "class"="CoreBundle\Entity\Achievement",
      *      "groups"={"achievement"}
@@ -50,7 +50,7 @@ class AchievementController extends BaseController
      * Add achievement(s) for a tab of a user
      * @ApiDoc(
      *  description="Add achievement(s) for a tab of a user",
-     *  section="Achievements",
+     *  section="4-Achievements",
      *  input={
      *      "class"="CoreBundle\Entity\Achievement",
      *      "groups"={"post"}
@@ -61,7 +61,7 @@ class AchievementController extends BaseController
      *  }
      * )
      *
-     * @Rest\View(statusCode=Response::HTTP_CREATED, serializerGroups={"achievement"})
+     * @Rest\View(serializerGroups={"achievement"})
      * @Rest\Post("/users/{user_id}/tabs/{tabs_id}/achievements")
      */
     public function postAchievementsAction(Request $request)
@@ -97,9 +97,9 @@ class AchievementController extends BaseController
      * Remove a achievement by id for a tab of a user
      * @ApiDoc(
      *  description="Remove a achievement by id for a tab of a user",
-     *  section="Achievements")
+     *  section="4-Achievements"
+     * )
      *
-     * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
      * @Rest\Delete("/users/{user_id}/tabs/{tabs_id}/achievements/{achievement_id}")
      */
     public function removeAchievementAction(Request $request)
@@ -124,7 +124,7 @@ class AchievementController extends BaseController
      * Complete update of a achievement of a tab of a user
      * @ApiDoc(
      *  description="Complete update of a achievement of a tab of a user",
-     *  section="Achievements",
+     *  section="4-Achievements",
      *  input={
      *      "class"="CoreBundle\Entity\Achievement",
      *      "groups"={"post"}
@@ -147,7 +147,7 @@ class AchievementController extends BaseController
      * Partial update of a achievement of a tab of a user
      * @ApiDoc(
      *  description="Partial update of a achievement of a tab of a user",
-     *  section="Achievements",
+     *  section="4-Achievements",
      *  input={
      *      "class"="CoreBundle\Entity\Achievement",
      *      "groups"={"post"}
