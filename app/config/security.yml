@@ -24,6 +24,7 @@ security:
             pattern: ^/
             anonymous: true
             provider: main
+            stateless: false
             # activate different ways to authenticate
 
             # http_basic: ~

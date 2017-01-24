@@ -2,11 +2,11 @@ CoreBundle\Entity\User:
     exclusion_policy: none
     properties:
         id:
-            groups: ['user', 'tab', 'achievement']
+            groups: ['user', 'tab', 'achievement', 'search']
         firstname:
-            groups: ['user', 'tab', 'post', 'achievement']
+            groups: ['user', 'tab', 'post', 'achievement', 'search']
         lastname:
-            groups: ['user', 'tab', 'post', 'achievement']
+            groups: ['user', 'tab', 'post', 'achievement', 'search']
         email:
             groups: ['user', 'tab', 'post', 'achievement']
         plainPassword:
@@ -14,4 +14,4 @@ CoreBundle\Entity\User:
         tabs:
             groups: ['user']
         profilePicture:
-            groups: ['user', 'tab', 'achievement', 'post']
+            groups: ['user', 'tab', 'achievement', 'post', 'search']

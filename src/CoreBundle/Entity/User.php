@@ -9,6 +9,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(name="users_email_unique",columns={"email"})})
+ *
+ * @ORM\Entity(repositoryClass="CoreBundle\Repository\UserRepository")
  */
 class User implements UserInterface
 {

@@ -86,7 +86,7 @@ class UserController extends BaseController
         }
         $request->getSession()->set("user_id", $user->getId());
         $ret = [
-            'message' => "Login sucess",
+            'message' => "Login success",
             'id' => $user->getId(),
             'firstname' => $user->getFirstname(),
             'lastname' => $user->getLastname(),
@@ -244,6 +244,28 @@ class UserController extends BaseController
         }
 
         return $user;
+    }
+
+    /**
+     * Get a user by searching his firstname or lastname
+     * @ApiDoc(
+     *  description="Get a user by searching his firstname or lastname",
+     *  section="2-Users",
+     *  output={
+     *      "class"="CoreBundle\Entity\User",
+     *      "groups"={"search"},
+     *      "parsers"={"Nelmio\ApiDocBundle\Parser\JmsMetadataParser"}
+     *  }
+     * )
+     *
+     * @Rest\View(serializerGroups={"search"})
+     * @Rest\Get("/search/{words}")
+     */
+    public function getSearchAction(Request $request)
+    {
+        $arr = explode(" ", $request->get('words'));
+
+        return $this->get('doctrine.orm.entity_manager')->getRepository('CoreBundle:User')->search($arr);
     }
 
     /**
