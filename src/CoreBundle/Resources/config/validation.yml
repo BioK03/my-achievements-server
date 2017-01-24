@@ -28,13 +28,10 @@ CoreBundle\Entity\Tab:
             - NotBlank: ~
             - Type: string
         color:
-            - NotBlank: ~
             - Type: string
         orderNumber:
-            - NotBlank: ~
             - Type: integer
         icon:
-            - NotBlank: ~
             - Type: string
         achievements:
             - Valid: ~
@@ -45,19 +42,14 @@ CoreBundle\Entity\Achievement:
             - NotBlank: ~
             - Type: string
         orderNumber:
-            - NotBlank: ~
             - Type: integer
         icon:
-            - NotBlank: ~
             - Type: string
         favorite:
-            - NotBlank: ~
             - Type: bool
         shortdesc:
-            - NotBlank: ~
             - Type: string
         longdesc:
-            - NotBlank: ~
             - Type: string
 
 CoreBundle\Entity\Credentials:

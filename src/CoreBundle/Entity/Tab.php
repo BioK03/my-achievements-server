@@ -3,6 +3,7 @@
 namespace CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Criteria;
 
 /**
  * @ORM\Entity()
@@ -46,6 +47,7 @@ class Tab
 
     /**
      * @ORM\OneToMany(targetEntity="Achievement", mappedBy="tab")
+     * @ORM\OrderBy({"orderNumber" = "ASC"})
      * @var Achievement[]
      */
     protected $achievements;

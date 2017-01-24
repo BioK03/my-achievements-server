@@ -14,7 +14,7 @@ class TabType extends AbstractType
     {
         $builder->add('name');
         $builder->add('color');
-        $builder->add('orderNumber');
+        $builder->add('orderNumber', ['empty_data' => 0]);
         $builder->add('icon');
         $builder->add('achievements', CollectionType::class, [
             'entry_type' => AchievementType::class,

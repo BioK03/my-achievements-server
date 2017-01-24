@@ -19,6 +19,18 @@ class UserController extends BaseController
 {
 
     /**
+     *
+     * @Rest\Get("/debug/{user_id}")
+     */
+    public function postDebugAction(Request $request)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+        $user = $em->getRepository('CoreBundle:User')
+                ->findOneById($request->get('user_id'));
+        return $this->ok('debug');
+    }
+
+    /**
      * Login
      * Return :
      * ['message' => "Login sucess",
@@ -79,7 +91,7 @@ class UserController extends BaseController
             'firstname' => $user->getFirstname(),
             'lastname' => $user->getLastname(),
             'email' => $user->getEmail(),
-            'publicPicture' => $user->getProfilePicture()
+            'profilePicture' => $user->getProfilePicture()
         ];
         return \FOS\RestBundle\View\View::create($ret, Response::HTTP_OK);
     }
@@ -130,7 +142,7 @@ class UserController extends BaseController
                 'firstname' => $user->getFirstname(),
                 'lastname' => $user->getLastname(),
                 'email' => $user->getEmail(),
-                'publicPicture' => $user->getProfilePicture(),
+                'profilePicture' => $user->getProfilePicture(),
                 'tabs' => []
             ];
 
