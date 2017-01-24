@@ -18,7 +18,6 @@ class UserRepository extends EntityRepository
             }
             $query .= "u.firstname LIKE '%".$w."%' OR u.lastname LIKE '%".$w."%'";
         }
-        var_dump($query);
         return $this->getEntityManager()->createQuery($query)->getResult();
     }
 }

@@ -11,6 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(name="users_email_unique",columns={"email"})})
  *
  * @ORM\Entity(repositoryClass="CoreBundle\Repository\UserRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class User implements UserInterface
 {
@@ -36,6 +37,11 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     protected $email;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $nbAchievements;
 
     /**
      * @ORM\Column(type="string")
@@ -158,5 +164,28 @@ class User implements UserInterface
     function setPlainPassword($plainPassword)
     {
         $this->plainPassword = $plainPassword;
+    }
+
+    function getNbAchievements()
+    {
+        return $this->nbAchievements;
+    }
+
+    function setNbAchievements($nbAchievements)
+    {
+        $this->nbAchievements = $nbAchievements;
+    }
+
+    /**
+     * @ORM\PreUpdate
+     * @ORM\PrePersist
+     */
+    public function calculNbAchievements()
+    {
+        $total = 0;
+        foreach ($this->getTabs() as $t) {
+            $total += $t->getAchievements()->count();
+        }
+        $this->setNbAchievements($total);
     }
 }

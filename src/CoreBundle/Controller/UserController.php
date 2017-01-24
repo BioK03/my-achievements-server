@@ -27,6 +27,8 @@ class UserController extends BaseController
         $em = $this->get('doctrine.orm.entity_manager');
         $user = $em->getRepository('CoreBundle:User')
                 ->findOneById($request->get('user_id'));
+        $user->calculNbAchievements();
+        $em->flush();
         return $this->ok('debug');
     }
 
@@ -91,7 +93,8 @@ class UserController extends BaseController
             'firstname' => $user->getFirstname(),
             'lastname' => $user->getLastname(),
             'email' => $user->getEmail(),
-            'profilePicture' => $user->getProfilePicture()
+            'profilePicture' => $user->getProfilePicture(),
+            'nbAchievements' => $user->getNbAchievements()
         ];
         return \FOS\RestBundle\View\View::create($ret, Response::HTTP_OK);
     }
@@ -143,6 +146,7 @@ class UserController extends BaseController
                 'lastname' => $user->getLastname(),
                 'email' => $user->getEmail(),
                 'profilePicture' => $user->getProfilePicture(),
+                'nbAchievements' => $user->getNbAchievements(),
                 'tabs' => []
             ];
 

@@ -17,9 +17,9 @@ class AchievementController extends BaseController
 {
 
     /**
-     * Get all achievements for a achievement of a user
+     * Get all achievements for a tab of a user
      * @ApiDoc(
-     *  description="Get all achievements for a achievement of a user",
+     *  description="Get all achievements for a tab of a user",
      *  section="4-Achievements",
      *  output={
      *      "class"="CoreBundle\Entity\Achievement",
@@ -28,7 +28,7 @@ class AchievementController extends BaseController
      * )
      *
      * @Rest\View(serializerGroups={"achievement"})
-     * @Rest\Get("/users/{user_id}/tabs/{tabs_id}/achievements")
+     * @Rest\Get("/users/{user_id}/tabs/{tab_id}/achievements")
      */
     public function getAchievementsAction(Request $request)
     {
@@ -39,11 +39,79 @@ class AchievementController extends BaseController
         if (empty($tab)) {
             return $this->tabNotFound();
         }
-        if ($tab->getUser()->getId() != $user_id) {
+        if ($tab->getUser()->getId() != $request->get('user_id')) {
             return $this->userNotCorrect();
         }
 
         return $tab->getAchievements();
+    }
+
+    /**
+     * Get all favorite achievements for a tab of a user
+     * @ApiDoc(
+     *  description="Get all favorite achievements for a tab of a user",
+     *  section="4-Achievements",
+     *  output={
+     *      "class"="CoreBundle\Entity\Achievement",
+     *      "groups"={"achievement"}
+     *  }
+     * )
+     *
+     * @Rest\View(serializerGroups={"achievement"})
+     * @Rest\Get("/users/{user_id}/tabs/{tab_id}/favoriteachievements")
+     */
+    public function getFavoriteAchievementsAction(Request $request)
+    {
+        $achievements = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CoreBundle:Achievement')
+                ->findBy(array('tab' => $request->get('tab_id'), 'id' => true));
+
+        if (empty($achievements)) {
+            return $this->achievementNotFound();
+        }
+        foreach ($achievements as $a) {
+            if ($a->getTab()->getId() != $request->get('tab_id')) {
+                return $this->tabNotCorrect();
+            }
+            if ($a->getTab()->getUser()->getId() != $request->get('user_id')) {
+                return $this->userNotCorrect();
+            }
+        }
+
+        return $achievements;
+    }
+
+    /**
+     * Get a achievement by id
+     * @ApiDoc(
+     *  description="Get a achievement by id",
+     *  section="4-Achievements",
+     *  output={
+     *      "class"="CoreBundle\Entity\Achievement",
+     *      "groups"={"achievement"}
+     *  }
+     * )
+     *
+     * @Rest\View(serializerGroups={"achievement"})
+     * @Rest\Get("/users/{user_id}/tabs/{tab_id}/achievements/{achievement_id}")
+     */
+    public function getAchievementAction(Request $request)
+    {
+        $achievement = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CoreBundle:Achievement')
+                ->find($request->get('achievement_id'));
+
+        if (empty($achievement)) {
+            return $this->achievementNotFound();
+        }
+        if ($achievement->getTab()->getUser()->getId() != $request->get('user_id')) {
+            return $this->userNotCorrect();
+        }
+        if ($achievement->getTab()->getId() != $request->get('tab_id')) {
+            return $this->tabNotCorrect();
+        }
+
+        return $achievement;
     }
 
     /**
@@ -62,7 +130,7 @@ class AchievementController extends BaseController
      * )
      *
      * @Rest\View(serializerGroups={"achievement"})
-     * @Rest\Post("/users/{user_id}/tabs/{tabs_id}/achievements")
+     * @Rest\Post("/users/{user_id}/tabs/{tab_id}/achievements")
      */
     public function postAchievementsAction(Request $request)
     {
@@ -100,7 +168,7 @@ class AchievementController extends BaseController
      *  section="4-Achievements"
      * )
      *
-     * @Rest\Delete("/users/{user_id}/tabs/{tabs_id}/achievements/{achievement_id}")
+     * @Rest\Delete("/users/{user_id}/tabs/{tab_id}/achievements/{achievement_id}")
      */
     public function removeAchievementAction(Request $request)
     {
@@ -109,10 +177,10 @@ class AchievementController extends BaseController
                 ->find($request->get('achievement_id'));
 
         if ($achievement) {
-            if ($achievement->getTab()->getId() != $tab_id) {
-                $this->tabNotCorrect();
+            if ($achievement->getTab()->getId() != $request->get('achievement_id')) {
+                return $this->tabNotCorrect();
             }
-            if ($achievement->getTab()->getUser()->getId() != $user_id) {
+            if ($achievement->getTab()->getUser()->getId() != $request->get('user_id')) {
                 return $this->userNotCorrect();
             }
             $em->remove($achievement);
@@ -136,7 +204,7 @@ class AchievementController extends BaseController
      * )
      *
      * @Rest\View(serializerGroups={"achievement"})
-     * @Rest\Put("/users/{user_id}/tabs/{tabs_id}/achievements/{achievement_id}")
+     * @Rest\Put("/users/{user_id}/tabs/{tab_id}/achievements/{achievement_id}")
      */
     public function updateAchievementAction(Request $request)
     {
@@ -159,7 +227,7 @@ class AchievementController extends BaseController
      * )
      *
      * @Rest\View(serializerGroups={"achievement"})
-     * @Rest\Patch("/users/{user_id}/tabs/{tabs_id}/achievements/{achievement_id}")
+     * @Rest\Patch("/users/{user_id}/tabs/{tab_id}/achievements/{achievement_id}")
      */
     public function patchAchievementAction(Request $request)
     {
@@ -175,10 +243,10 @@ class AchievementController extends BaseController
         if (empty($achievement)) {
             return $this->achievementNotFound();
         }
-        if ($achievement->getTab()->getUser()->getId() != $user_id) {
+        if ($achievement->getTab()->getUser()->getId() != $request->get('user_id')) {
             return $this->userNotCorrect();
         }
-        if ($achievement->getTab()->getId() != $tab_id) {
+        if ($achievement->getTab()->getId() != $request->get('tab_id')) {
             return $this->tabNotCorrect();
         }
 

@@ -44,6 +44,36 @@ class TabController extends BaseController
     }
 
     /**
+     * Get a tab by id
+     * @ApiDoc(
+     *  description="Get a tab by id",
+     *  section="3-Tabs",
+     *  output={
+     *      "class"="CoreBundle\Entity\Tab",
+     *      "groups"={"tab"}
+     *  }
+     * )
+     *
+     * @Rest\View(serializerGroups={"tab"})
+     * @Rest\Get("/users/{user_id}/tabs/{tab_id}")
+     */
+    public function getTabAction(Request $request)
+    {
+        $tab = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CoreBundle:Tab')
+                ->find($request->get('tab_id'));
+
+        if (empty($tab)) {
+            return $this->tabNotFound();
+        }
+        if ($request->get('tab_id') != $tab->getUser()->getId()) {
+            return $this->userNotCorrect();
+        }
+
+        return $tab;
+    }
+
+    /**
      * Add tab(s) for a user
      * @ApiDoc(
      *  description="Add tab(s) for a user",

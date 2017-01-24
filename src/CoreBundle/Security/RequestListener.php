@@ -16,7 +16,6 @@ class RequestListener
         if (strstr($request->getUri(), "/users/")) {
             $temp = substr($request->getUri(), strpos($request->getUri(), "/users/") + 7);
             $user_id = substr($temp, 0, strpos($temp, "/") + 1);
-            var_dump($user_id);
 
             if ($request->getSession()->get("user_id") == null) {
                 $event->setResponse(new JsonResponse(array('message' => 'You are not connected'), Response::HTTP_UNAUTHORIZED)); //HTTP_PROXY_AUTHENTICATION_REQUIRED
