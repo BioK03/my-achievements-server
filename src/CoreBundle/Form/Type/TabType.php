@@ -14,7 +14,7 @@ class TabType extends AbstractType
     {
         $builder->add('name');
         $builder->add('color');
-        $builder->add('orderNumber', ['empty_data' => 0]);
+        $builder->add('orderNumber', \Symfony\Component\Form\Extension\Core\Type\IntegerType::class, array('empty_data' => 0));
         $builder->add('icon');
         $builder->add('achievements', CollectionType::class, [
             'entry_type' => AchievementType::class,

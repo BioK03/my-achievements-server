@@ -25,7 +25,7 @@ class Tab
     protected $name;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $color;
 
@@ -35,7 +35,7 @@ class Tab
     protected $orderNumber;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $icon;
 
@@ -46,7 +46,7 @@ class Tab
     protected $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="Achievement", mappedBy="tab")
+     * @ORM\OneToMany(targetEntity="Achievement", mappedBy="tab", cascade={"persist", "remove"})
      * @ORM\OrderBy({"orderNumber" = "ASC"})
      * @var Achievement[]
      */

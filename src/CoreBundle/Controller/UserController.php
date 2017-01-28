@@ -207,9 +207,7 @@ class UserController extends BaseController
                 $tab->setUser($user);
                 foreach ($tab->getAchievements() as $achievement) {
                     $achievement->setTab($tab);
-                    $em->persist($achievement);
                 }
-                $em->persist($tab);
             }
             $encoder = $this->get('security.password_encoder');
             $encoded = $encoder->encodePassword($user, $user->getPlainPassword());
@@ -287,9 +285,6 @@ class UserController extends BaseController
                 ->find($request->get('user_id'));
 
         if ($user) {
-            foreach ($user->getTabs() as $tab) {
-                $em->remove($tab);
-            }
             $em->remove($user);
             $em->flush();
         }

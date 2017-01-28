@@ -50,12 +50,12 @@ class User implements UserInterface
     protected $plainPassword;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $profilePicture;
 
     /**
-     * @ORM\OneToMany(targetEntity="Tab", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Tab", mappedBy="user", cascade={"persist", "remove"})
      * @ORM\OrderBy({"orderNumber" = "ASC"})
      * @var Tab[]
      */

@@ -111,7 +111,6 @@ class TabController extends BaseController
             $em = $this->get('doctrine.orm.entity_manager');
             foreach ($tab->getAchievements() as $achievement) {
                 $achievement->setTab($tab);
-                $em->persist($achievement);
             }
             $em->persist($tab);
             $em->flush();
