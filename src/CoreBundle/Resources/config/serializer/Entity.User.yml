@@ -8,7 +8,7 @@ CoreBundle\Entity\User:
         lastname:
             groups: ['user', 'tab', 'post', 'achievement', 'search']
         email:
-            groups: ['user', 'tab', 'post', 'achievement']
+            groups: ['user', 'tab', 'post', 'achievement', 'search']
         plainPassword:
             groups: ['post']
         tabs:

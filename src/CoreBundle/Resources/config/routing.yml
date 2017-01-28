@@ -2,15 +2,25 @@ core_homepage:
     path:     /
     defaults: { _controller: CoreBundle:Default:index }
 
+debug:
+    path:     /debug/{user_id}
+    methods: [GET]
+    defaults: { _controller: CoreBundle:Default:getDebug }
+
 post_login:
     path:     /login
     methods: [POST]
-    defaults: { _controller: CoreBundle:User:postLogin }
+    defaults: { _controller: CoreBundle:Security:postLogin }
 
 post_logout:
-    path:     /users/{user_id}/logout
-    methods: [POST]
-    defaults: { _controller: CoreBundle:User:postLogout }
+    path:     /logout
+    methods: [DELETE]
+    defaults: { _controller: CoreBundle:Security:deleteLogout }
+
+get_connected:
+    path:     /connected
+    methods: [GET]
+    defaults: { _controller: CoreBundle:Security:getConnected }
 
 users:
     type:     rest
