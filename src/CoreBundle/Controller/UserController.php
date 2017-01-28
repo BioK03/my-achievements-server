@@ -19,105 +19,10 @@ class UserController extends BaseController
 {
 
     /**
-     *
-     * @Rest\Get("/debug/{user_id}")
-     */
-    public function postDebugAction(Request $request)
-    {
-        $em = $this->get('doctrine.orm.entity_manager');
-        $user = $em->getRepository('CoreBundle:User')
-                ->findOneById($request->get('user_id'));
-        $user->calculNbAchievements();
-        $em->flush();
-        return $this->ok('debug');
-    }
-
-    /**
-     * Login
-     * Return :
-     * ['message' => "Login sucess",
-     * 'id' => user id,
-     * 'firstname' => use firstname,
-     * 'lastname' => user lastname,
-     * 'email' => user email,
-     * 'publicPicture' => user profilePicture]
-     *
-     * @ApiDoc(
-     *  description="Login",
-     *  section="1-Security",
-     *  input={
-     *      "class"="CoreBundle\Entity\Credentials"
-     *  }
-     * )
-     *
-     * @Rest\Post("/login")
-     */
-    public function postLoginAction(Request $request)
-    {
-        $credentials = new Credentials();
-        $form = $this->createForm(CredentialsType::class, $credentials);
-
-        $form->submit($request->request->all());
-
-        if (!$form->isValid()) {
-            return $form;
-        }
-
-        $em = $this->get('doctrine.orm.entity_manager');
-
-        $user = $em->getRepository('CoreBundle:User')
-                ->findOneByEmail($credentials->getLogin());
-
-        if (!$user) {
-            return $this->invalidCredentials();
-        }
-
-        $encoder = $this->get('security.password_encoder');
-        $isPasswordValid = $encoder->isPasswordValid($user, $credentials->getPassword());
-
-        if (!$isPasswordValid) {
-            if ($request->getSession()->get("connection_attemp") == null) {
-                $request->getSession()->set("connection_attemp", 1);
-            } else {
-                $request->getSession()->set("connection_attemp", $request->getSession()->get("connection_attemp") + 1);
-            }
-            if ($request->getSession()->get("connection_attemp") >= 5) {
-                return $this->replayAttackError();
-            }
-            return $this->invalidCredentials();
-        }
-        $request->getSession()->set("user_id", $user->getId());
-        $ret = [
-            'message' => "Login success",
-            'id' => $user->getId(),
-            'firstname' => $user->getFirstname(),
-            'lastname' => $user->getLastname(),
-            'email' => $user->getEmail(),
-            'profilePicture' => $user->getProfilePicture(),
-            'nbAchievements' => $user->getNbAchievements()
-        ];
-        return \FOS\RestBundle\View\View::create($ret, Response::HTTP_OK);
-    }
-
-    /** Logout
-     * @ApiDoc(
-     *  description="Logout",
-     *  section="1-Security"
-     * )
-     *
-     * @Rest\DELETE("/users/{user_id}/logout")
-     */
-    public function postLogoutAction(Request $request)
-    {
-        $request->getSession()->remove("user_id");
-        return $this->ok("Logout success");
-    }
-
-    /**
      * Get a profile user by id
      * @ApiDoc(
      *  description="Get a profile user by id",
-     *  section="2-Users",
+     *  section="2-Users (Public)",
      *  output={
      *      "class"="CoreBundle\Entity\User",
      *      "groups"={"user"},
@@ -252,7 +157,7 @@ class UserController extends BaseController
      * Get a user by searching his firstname or lastname
      * @ApiDoc(
      *  description="Get a user by searching his firstname or lastname",
-     *  section="2-Users",
+     *  section="2-Users (Public)",
      *  output={
      *      "class"="CoreBundle\Entity\User",
      *      "groups"={"search"},
