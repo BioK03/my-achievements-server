@@ -12,11 +12,11 @@ class AchievementType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name');
-        $builder->add('orderNumber', \Symfony\Component\Form\Extension\Core\Type\IntegerType::class, ['empty_data' => 0]);
+        $builder->add('orderNumber');
         $builder->add('icon');
-        $builder->add('shortdesc', \Symfony\Component\Form\Extension\Core\Type\TextType::class, ['empty_data' => "Short description of the achievement"]);
-        $builder->add('longdesc', \Symfony\Component\Form\Extension\Core\Type\TextType::class, ['empty_data' => "Complete description of the achievement"]);
-        $builder->add('favorite', \Symfony\Component\Form\Extension\Core\Type\CheckboxType::class, ['empty_data' => false]);
+        $builder->add('shortdesc');
+        $builder->add('longdesc');
+        $builder->add('favorite');
     }
 
     public function configureOptions(OptionsResolver $resolver)

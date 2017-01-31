@@ -7,8 +7,9 @@ use Doctrine\Common\Collections\Criteria;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="tabs", uniqueConstraints={@ORM\UniqueConstraint(name="order_unique",columns={"order_number", "user_id"})}))
+ * @ORM\Table(name="tabs")
  */
+// , uniqueConstraints={@ORM\UniqueConstraint(name="order_unique",columns={"order_number", "user_id"})})
 class Tab
 {
 
@@ -51,6 +52,13 @@ class Tab
      * @var Achievement[]
      */
     protected $achievements;
+
+    function defaultValues()
+    {
+        if ($this->getOrderNumber() == null) {
+            $this->setOrderNumber(0);
+        }
+    }
 
     function getId()
     {

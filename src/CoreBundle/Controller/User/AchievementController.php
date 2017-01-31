@@ -153,6 +153,7 @@ class AchievementController extends BaseController
 
         if ($form->isValid()) {
             $em = $this->get('doctrine.orm.entity_manager');
+            $achievement->defaultValues();
             $em->persist($achievement);
             $em->flush();
             return $achievement;
@@ -256,6 +257,7 @@ class AchievementController extends BaseController
 
         if ($form->isValid()) {
             $em = $this->get('doctrine.orm.entity_manager');
+            $achievement->defaultValues();
             $em->persist($achievement);
             $em->flush();
             return $achievement;

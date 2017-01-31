@@ -54,6 +54,22 @@ class Achievement
      */
     protected $tab;
 
+    function defaultValues()
+    {
+        if ($this->getOrderNumber() == null) {
+            $this->setOrderNumber(0);
+        }
+        if ($this->getFavorite() == null) {
+            $this->setFavorite(false);
+        }
+        if ($this->getShortdesc() == null) {
+            $this->setShortdesc("Short description of the achievement");
+        }
+        if ($this->getLongdesc() == null) {
+            $this->setLongdesc("Complete description of the achievement");
+        }
+    }
+
     function getId()
     {
         return $this->id;

@@ -112,6 +112,7 @@ class TabController extends BaseController
             foreach ($tab->getAchievements() as $achievement) {
                 $achievement->setTab($tab);
             }
+            $tab->defaultValues();
             $em->persist($tab);
             $em->flush();
             return $tab;
@@ -210,6 +211,7 @@ class TabController extends BaseController
 
         if ($form->isValid()) {
             $em = $this->get('doctrine.orm.entity_manager');
+            $tab->defaultValues();
             $em->persist($tab);
             $em->flush();
             return $tab;
