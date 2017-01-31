@@ -141,7 +141,7 @@ class AchievementController extends BaseController
         if (empty($tab)) {
             return $this->tabNotFound();
         }
-        if ($tab->getUser()->getId() != $user_id) {
+        if ($tab->getUser()->getId() != $request->get('user_id')) {
             return $this->userNotCorrect();
         }
 
@@ -237,7 +237,7 @@ class AchievementController extends BaseController
     private function updateAchievement(Request $request, $clearMissing)
     {
         $achievement = $this->get('doctrine.orm.entity_manager')
-                ->getRepository('AppBundle:Achievement')
+                ->getRepository('CoreBundle:Achievement')
                 ->find($request->get('achievement_id'));
 
         if (empty($achievement)) {

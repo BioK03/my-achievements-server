@@ -136,7 +136,7 @@ class TabController extends BaseController
                 ->find($request->get('tab_id'));
 
         if ($tab) {
-            if ($tab->getUser()->getId() != $user_id) {
+            if ($tab->getUser()->getId() != $request->get('user_id')) {
                 $this->userNotCorrect();
             }
             $em->remove($tab);
@@ -193,14 +193,14 @@ class TabController extends BaseController
     private function updateTab(Request $request, $clearMissing)
     {
         $tab = $this->get('doctrine.orm.entity_manager')
-                ->getRepository('AppBundle:Tab')
+                ->getRepository('CoreBundle:Tab')
                 ->find($request->get('tab_id'));
 
         if (empty($tab)) {
             return $this->tabNotFound();
         }
 
-        if ($tab->getUser()->getId() != $user_id) {
+        if ($tab->getUser()->getId() != $request->get('user_id')) {
             return $this->userNotCorrect();
         }
 

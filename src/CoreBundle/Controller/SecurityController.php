@@ -21,7 +21,7 @@ class SecurityController extends BaseController
     /**
      * Login
      * Return :
-     * ['message' => "Login sucess",
+     * ['message' => "Login success",
      * 'id' => user id,
      * 'firstname' => use firstname,
      * 'lastname' => user lastname,
@@ -86,6 +86,8 @@ class SecurityController extends BaseController
     }
 
     /** Logout
+     * Return :
+     * ['message' => "Logout success"]
      * @ApiDoc(
      *  description="Logout",
      *  section="1-Security"
@@ -100,6 +102,8 @@ class SecurityController extends BaseController
     }
 
     /** Check connection for a user
+     * Return :
+     * ['message' => boolean]
      * @ApiDoc(
      *  description="Check connection for a user",
      *  section="1-Security"
