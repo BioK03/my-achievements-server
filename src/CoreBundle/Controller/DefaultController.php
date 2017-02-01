@@ -46,7 +46,22 @@ class DefaultController extends BaseController
      */
     public function postTestAction(Request $request)
     {
+        $files = $request->files;
+        $paths = [];
+        foreach ($files as $file) {
+            $paths[] = 'http://localhost:8100/uploads/'.$this->upload($file, $file->getCLientOriginalName());
+        }
+        return \FOS\RestBundle\View\View::create(['paths' => $paths], Response::HTTP_OK);
+    }
 
-        return $request->get('uploads');
+    public function upload(UploadedFile $file, $name)
+    {
+        $parts = explode(".", $name);
+
+        $fileName = md5(uniqid()).'.'.$parts[count($parts) - 1];
+
+        $file->move(__DIR__.'/../../../web/uploads', $fileName);
+
+        return $fileName;
     }
 }
