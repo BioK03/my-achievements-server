@@ -64,7 +64,7 @@ class AchievementController extends BaseController
     {
         $achievements = $this->get('doctrine.orm.entity_manager')
                 ->getRepository('CoreBundle:Achievement')
-                ->findBy(array('tab' => $request->get('tab_id'), 'id' => true));
+                ->findBy(array('tab' => $request->get('tab_id'), 'favorite' => true));
 
         if (empty($achievements)) {
             return $this->achievementNotFound();

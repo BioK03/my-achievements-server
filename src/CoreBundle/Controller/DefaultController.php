@@ -39,4 +39,14 @@ class DefaultController extends BaseController
         $em->flush();
         return $this->ok('debug');
     }
+
+    /**
+     *
+     * @Rest\Post("/test")
+     */
+    public function postTestAction(Request $request)
+    {
+
+        return $request->get('uploads');
+    }
 }

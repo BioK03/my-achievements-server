@@ -64,7 +64,7 @@ class UserController extends BaseController
                     'icon' => $t->getIcon(),
                     'achievements' => []
                 ];
-                $achievements = $this->get('doctrine.orm.entity_manager')->getRepository('CoreBundle:Achievement')->findBy(['tab' => $t, 'favorite' => true], ['orderNumber' => 'desc']);
+                $achievements = $this->get('doctrine.orm.entity_manager')->getRepository('CoreBundle:Achievement')->findBy(['tab' => $t, 'favorite' => true], ['orderNumber' => 'desc'], 3, 0);
                 foreach ($achievements as $a) {
                     $tab['achievements'][] = [
                         'id' => $a->getId(),
@@ -180,7 +180,7 @@ class UserController extends BaseController
      * @ApiDoc(
      *  description="Remove a user by id",
      *  section="2-Users")
-     * 
+     *
      * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
      * @Rest\Delete("/users/{user_id}")
      */
