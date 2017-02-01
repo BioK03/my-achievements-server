@@ -169,16 +169,17 @@ class AchievementController extends BaseController
      *  section="4-Achievements"
      * )
      *
+     * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
      * @Rest\Delete("/users/{user_id}/tabs/{tab_id}/achievements/{achievement_id}")
      */
-    public function removeAchievementAction(Request $request)
+    public function deleteAchievementAction(Request $request)
     {
         $em = $this->get('doctrine.orm.entity_manager');
         $achievement = $em->getRepository('CoreBundle:Achievement')
                 ->find($request->get('achievement_id'));
 
         if ($achievement) {
-            if ($achievement->getTab()->getId() != $request->get('achievement_id')) {
+            if ($achievement->getTab()->getId() != $request->get('tab_id')) {
                 return $this->tabNotCorrect();
             }
             if ($achievement->getTab()->getUser()->getId() != $request->get('user_id')) {

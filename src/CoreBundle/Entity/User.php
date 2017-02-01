@@ -56,7 +56,7 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity="Tab", mappedBy="user", cascade={"persist", "remove"})
-     * @ORM\OrderBy({"orderNumber" = "ASC"})
+     * @ORM\OrderBy({"orderNumber" = "ASC", "id" = "ASC"})
      * @var Tab[]
      */
     protected $tabs;

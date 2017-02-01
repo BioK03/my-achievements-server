@@ -180,10 +180,11 @@ class UserController extends BaseController
      * @ApiDoc(
      *  description="Remove a user by id",
      *  section="2-Users")
-     *
+     * 
+     * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
      * @Rest\Delete("/users/{user_id}")
      */
-    public function removeUserAction(Request $request)
+    public function deleteUserAction(Request $request)
     {
         $em = $this->get('doctrine.orm.entity_manager');
         $user = $em->getRepository('CoreBundle:User')

@@ -128,9 +128,10 @@ class TabController extends BaseController
      *  section="3-Tabs"
      * )
      *
+     * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
      * @Rest\Delete("/users/{user_id}/tabs/{tab_id}")
      */
-    public function removeTabAction(Request $request)
+    public function deleteTabAction(Request $request)
     {
         $em = $this->get('doctrine.orm.entity_manager');
         $tab = $em->getRepository('CoreBundle:Tab')
