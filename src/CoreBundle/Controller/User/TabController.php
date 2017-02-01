@@ -112,8 +112,10 @@ class TabController extends BaseController
             foreach ($tab->getAchievements() as $achievement) {
                 $achievement->setTab($tab);
             }
-            $tab->defaultValues();
+            $tab->defaultValues(true);
             $em->persist($tab);
+            $em->flush();
+            $this->checkOrderNumber(0, $tab->getOrderNumber(), $tab->getUser()->getId());
             $em->flush();
             return $tab;
         } else {
@@ -206,18 +208,37 @@ class TabController extends BaseController
             return $this->userNotCorrect();
         }
 
+        $oldOrderNumber = $tab->getOrderNumber();
         $form = $this->createForm(TabType::class, $tab);
 
         $form->submit($request->request->all(), $clearMissing);
 
         if ($form->isValid()) {
             $em = $this->get('doctrine.orm.entity_manager');
-            $tab->defaultValues();
-            $em->persist($tab);
+            $tab->defaultValues($oldOrderNumber != $tab->getOrderNumber());
+            $em->flush();
+            $this->checkOrderNumber($oldOrderNumber, $tab->getOrderNumber(), $tab->getUser()->getId());
             $em->flush();
             return $tab;
         } else {
             return $form;
+        }
+    }
+
+    private function checkOrderNumber($oldOrderNumber, $newOrderNumber, $user_id)
+    {
+        if ($oldOrderNumber < $newOrderNumber && $oldOrderNumber != 0) {
+            $arr = $this->get('doctrine.orm.entity_manager')->getRepository('CoreBundle:Tab')->getTabsAsc($user_id);
+        } else {
+            $arr = $this->get('doctrine.orm.entity_manager')->getRepository('CoreBundle:Tab')->getTabsDesc($user_id);
+        }
+
+        $i = 1;
+        foreach ($arr as $tab) {
+            if ($i != $tab->getOrderNumber()) {
+                $tab->setOrderNumber($i);
+            }
+            $i++;
         }
     }
 }

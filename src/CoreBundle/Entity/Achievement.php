@@ -7,6 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="achievements")
+ *
+ * @ORM\Entity(repositoryClass="CoreBundle\Repository\AchievementRepository")
  */
 class Achievement
 {
@@ -54,7 +56,12 @@ class Achievement
      */
     protected $tab;
 
-    function defaultValues()
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $lastOrderNumberModification;
+
+    function defaultValues($orderNumberHasChanged)
     {
         if ($this->getOrderNumber() == null) {
             $this->setOrderNumber(0);
@@ -68,6 +75,15 @@ class Achievement
         if ($this->getLongdesc() == null) {
             $this->setLongdesc("Complete description of the achievement");
         }
+        if ($orderNumberHasChanged) {
+            $this->lastOrderNumberModification();
+        }
+        $this->getTab()->getUser()->calculNbAchievements();
+    }
+
+    public function lastOrderNumberModification()
+    {
+        $this->setLastOrderNumberModification(date('Y-m-d H:i:s'));
     }
 
     function getId()
@@ -148,5 +164,15 @@ class Achievement
     function setTab(Tab $tab)
     {
         $this->tab = $tab;
+    }
+
+    function getLastOrderNumberModification()
+    {
+        return $this->lastOrderNumberModification;
+    }
+
+    function setLastOrderNumberModification($lastOrderNumberModification)
+    {
+        $this->lastOrderNumberModification = $lastOrderNumberModification;
     }
 }

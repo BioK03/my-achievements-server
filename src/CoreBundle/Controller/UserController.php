@@ -117,6 +117,7 @@ class UserController extends BaseController
             $encoder = $this->get('security.password_encoder');
             $encoded = $encoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($encoded);
+            $user->calculNbAchievements();
             $em->persist($user);
             $em->flush();
             return $user;
@@ -258,7 +259,7 @@ class UserController extends BaseController
 
         if ($form->isValid()) {
             $em = $this->get('doctrine.orm.entity_manager');
-            $em->persist($user);
+            $user->calculNbAchievements();
             $em->flush();
             return $user;
         } else {

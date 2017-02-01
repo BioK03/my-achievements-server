@@ -153,8 +153,10 @@ class AchievementController extends BaseController
 
         if ($form->isValid()) {
             $em = $this->get('doctrine.orm.entity_manager');
-            $achievement->defaultValues();
+            $achievement->defaultValues(true);
             $em->persist($achievement);
+            $em->flush();
+            $this->checkOrderNumber(0, $achievement->getOrderNumber(), $achievement->getTab()->getId());
             $em->flush();
             return $achievement;
         } else {
@@ -252,18 +254,37 @@ class AchievementController extends BaseController
             return $this->tabNotCorrect();
         }
 
+        $oldOrderNumber = $achievement->getOrderNumber();
         $form = $this->createForm(AchievementType::class, $achievement);
 
         $form->submit($request->request->all(), $clearMissing);
 
         if ($form->isValid()) {
             $em = $this->get('doctrine.orm.entity_manager');
-            $achievement->defaultValues();
-            $em->persist($achievement);
+            $achievement->defaultValues($oldOrderNumber != $achievement->getOrderNumber());
+            $em->flush();
+            $this->checkOrderNumber($oldOrderNumber, $achievement->getOrderNumber(), $achievement->getTab()->getId());
             $em->flush();
             return $achievement;
         } else {
             return $form;
+        }
+    }
+
+    private function checkOrderNumber($oldOrderNumber, $newOrderNumber, $tab_id)
+    {
+        if ($oldOrderNumber < $newOrderNumber && $oldOrderNumber != 0) {
+            $arr = $this->get('doctrine.orm.entity_manager')->getRepository('CoreBundle:Achievement')->getAchievementsAsc($tab_id);
+        } else {
+            $arr = $this->get('doctrine.orm.entity_manager')->getRepository('CoreBundle:Achievement')->getAchievementsDesc($tab_id);
+        }
+
+        $i = 1;
+        foreach ($arr as $ach) {
+            if ($i != $ach->getOrderNumber()) {
+                $ach->setOrderNumber($i);
+            }
+            $i++;
         }
     }
 }

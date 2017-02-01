@@ -8,8 +8,9 @@ use Doctrine\Common\Collections\Criteria;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="tabs")
+ *
+ * @ORM\Entity(repositoryClass="CoreBundle\Repository\TabRepository")
  */
-// , uniqueConstraints={@ORM\UniqueConstraint(name="order_unique",columns={"order_number", "user_id"})})
 class Tab
 {
 
@@ -53,11 +54,24 @@ class Tab
      */
     protected $achievements;
 
-    function defaultValues()
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $lastOrderNumberModification;
+
+    function defaultValues($orderNumberHasChanged)
     {
         if ($this->getOrderNumber() == null) {
-            $this->setOrderNumber(0);
+            $this->setOrderNumber(1);
         }
+        if ($orderNumberHasChanged) {
+            $this->lastOrderNumberModification();
+        } $this->getUser()->calculNbAchievements();
+    }
+
+    public function lastOrderNumberModification()
+    {
+        $this->setLastOrderNumberModification(date('Y-m-d H:i:s'));
     }
 
     function getId()
@@ -128,5 +142,15 @@ class Tab
     function setAchievements(array $achievements)
     {
         $this->achievements = $achievements;
+    }
+
+    function getLastOrderNumberModification()
+    {
+        return $this->lastOrderNumberModification;
+    }
+
+    function setLastOrderNumberModification($lastOrderNumberModification)
+    {
+        $this->lastOrderNumberModification = $lastOrderNumberModification;
     }
 }

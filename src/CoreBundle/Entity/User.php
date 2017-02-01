@@ -11,7 +11,6 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(name="users_email_unique",columns={"email"})})
  *
  * @ORM\Entity(repositoryClass="CoreBundle\Repository\UserRepository")
- * @ORM\HasLifecycleCallbacks()
  */
 class User implements UserInterface
 {
@@ -56,7 +55,7 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity="Tab", mappedBy="user", cascade={"persist", "remove"})
-     * @ORM\OrderBy({"orderNumber" = "ASC", "id" = "ASC"})
+     * @ORM\OrderBy({"orderNumber" = "ASC"})
      * @var Tab[]
      */
     protected $tabs;
@@ -176,10 +175,6 @@ class User implements UserInterface
         $this->nbAchievements = $nbAchievements;
     }
 
-    /**
-     * @ORM\PreUpdate
-     * @ORM\PrePersist
-     */
     public function calculNbAchievements()
     {
         $total = 0;
