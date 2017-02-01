@@ -66,7 +66,7 @@ class TabController extends BaseController
         if (empty($tab)) {
             return $this->tabNotFound();
         }
-        if ($request->get('tab_id') != $tab->getUser()->getId()) {
+        if ($request->get('user_id') != $tab->getUser()->getId()) {
             return $this->userNotCorrect();
         }
 
