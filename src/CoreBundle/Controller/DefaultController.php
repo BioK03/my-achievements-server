@@ -35,16 +35,16 @@ class DefaultController extends BaseController
      *  section="0-Default"
      * )
      *
-     * @Rest\Post("/deleteunusedfile")
+     * @Rest\Post("/deleteunusedfiles")
      */
-    public function postDeleteUnusedFileAction(Request $request)
+    public function postDeleteUnusedFilesAction(Request $request)
     {
         $em = $this->get('doctrine.orm.entity_manager');
         $res = $em->getRepository('CoreBundle:User')->getAllFiles();
         $files = [];
         foreach ($res as $re) {
             if ($re['profilePicture'] != null) {
-                $files[] = $re['profilePicture'];
+                $files[] = bsename($re['profilePicture']);
             }
         }
 
@@ -52,11 +52,16 @@ class DefaultController extends BaseController
         foreach ($res as $re) {
             foreach ($re['images'] as $img) {
                 if ($img != null) {
-                    $files[] = $img;
+                    $files[] = basename($img);
                 }
             }
         }
         $serverFiles = scandir(__DIR__.'/../../../web/uploads');
+        foreach ($serverFiles as $file) {
+            if ($file != "." && $file != ".." && !in_array($file, $files)) {
+                unlink(__DIR__.'/../../../web/uploads'.$file);
+            }
+        }
         return \FOS\RestBundle\View\View::create(['files' => $files, 'serverFiles' => $serverFiles, 'test' => basename($files[0])], Response::HTTP_OK);
     }
 
