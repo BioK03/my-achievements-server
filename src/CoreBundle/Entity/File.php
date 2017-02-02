@@ -81,7 +81,7 @@ class File
     public function preUpload()
     {
         // If there is no file.
-        if (null !== $this->getFile()) {
+        if (null != $this->getFile()) {
             $this->path = hash_file("sha512", $this->file).'.'.$this->file->guessExtension();
             $this->description = $this->getDescription().' Original name : '.$this->file->getClientOriginalName();
         }

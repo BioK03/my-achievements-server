@@ -297,7 +297,8 @@ class UserController extends BaseController
                 $em->persist($file);
             }
             $file->setFile($upFile);
-            $em->persist($file);
+            $test = hash_file("sha512", $file->getFile()).'.'.$file->getFile()->guessExtension();
+            return \FOS\RestBundle\View\View::create(['debug' => $test], Response::HTTP_OK);
             $em->flush();
             $paths[] = $file->getWebPath();
         }
