@@ -82,9 +82,20 @@ class File
     {
         // If there is no file.
         if (null != $this->getFile()) {
-            $this->path = hash_file("sha512", $this->file).'.'.$this->file->guessExtension();
+            $this->path = createName($this->getFile(), $this->getFile()->getClientOriginalName());
             $this->description = $this->getDescription().' Original name : '.$this->file->getClientOriginalName();
         }
+    }
+
+    public function createName(UploadedFile $file, $name)
+    {
+        $parts = explode(".", $name);
+
+        $fileName = md5(uniqid()).'.'.$parts[count($parts) - 1];
+
+        $file->move(__DIR__.'/../../../web', $fileName);
+
+        return $fileName;
     }
 
     /**
