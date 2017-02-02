@@ -59,10 +59,10 @@ class DefaultController extends BaseController
         $serverFiles = scandir(__DIR__.'/../../../web/uploads');
         foreach ($serverFiles as $file) {
             if ($file != "." && $file != ".." && !in_array($file, $files)) {
-                unlink(__DIR__.'/../../../web/uploads'.$file);
+                unlink(__DIR__.'/../../../web/uploads/'.$file);
             }
         }
-        return \FOS\RestBundle\View\View::create(['files' => $files, 'serverFiles' => $serverFiles, 'test' => basename($files[0])], Response::HTTP_OK);
+        return \FOS\RestBundle\View\View::create(['message' => "Unused Files deleted"], Response::HTTP_OK);
     }
 
     /**
