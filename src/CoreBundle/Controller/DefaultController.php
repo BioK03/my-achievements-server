@@ -52,7 +52,7 @@ class DefaultController extends BaseController
      *
      * @Rest\Post("/upload")
      */
-    public function postTestAction(Request $request)
+    public function postUploadAction(Request $request)
     {
         $files = $request->files;
         $paths = [];
