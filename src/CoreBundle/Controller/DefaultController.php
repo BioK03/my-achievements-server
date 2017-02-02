@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class DefaultController extends BaseController
 {
@@ -38,30 +39,5 @@ class DefaultController extends BaseController
         $user->calculNbAchievements();
         $em->flush();
         return $this->ok('debug');
-    }
-
-    /**
-     *
-     * @Rest\Post("/test")
-     */
-    public function postTestAction(Request $request)
-    {
-        $files = $request->files;
-        $paths = [];
-        foreach ($files as $file) {
-            $paths[] = 'http://localhost:8100/uploads/'.$this->upload($file, $file->getCLientOriginalName());
-        }
-        return \FOS\RestBundle\View\View::create(['paths' => $paths], Response::HTTP_OK);
-    }
-
-    public function upload(UploadedFile $file, $name)
-    {
-        $parts = explode(".", $name);
-
-        $fileName = md5(uniqid()).'.'.$parts[count($parts) - 1];
-
-        $file->move(__DIR__.'/../../../web/uploads', $fileName);
-
-        return $fileName;
     }
 }

@@ -7,11 +7,6 @@ debug:
     methods: [GET]
     defaults: { _controller: CoreBundle:Default:getDebug }
 
-test:
-    path:     /test
-    methods: [POST]
-    defaults: { _controller: CoreBundle:Default:postTest }
-
 post_login:
     path:     /login
     methods: [POST]

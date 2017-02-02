@@ -14,6 +14,8 @@ CoreBundle\Entity\User:
         tabs:
             groups: ['user']
         profilePicture:
+            accessor:
+                getter: getProfilePictureWebPath
             groups: ['user', 'tab', 'achievement', 'post', 'search']
         nbAchievements:
             groups: ['user', 'tab', 'achievement', 'post']

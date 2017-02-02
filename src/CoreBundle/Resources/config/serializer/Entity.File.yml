@@ -1,0 +1,10 @@
+CoreBundle\Entity\File:
+    exclusion_policy: none
+    properties:
+        path:
+            accessor:
+                getter: getWebPath
+            groups: ['tab', 'user', 'post', 'achievement']
+
+
+

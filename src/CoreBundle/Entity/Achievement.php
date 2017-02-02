@@ -61,6 +61,12 @@ class Achievement
      */
     protected $lastOrderNumberModification;
 
+    /**
+     * @ORM\OneToMany(targetEntity="File", mappedBy="achievement", cascade={"remove"})
+     * @var File[]
+     */
+    protected $images;
+
     function defaultValues($orderNumberHasChanged)
     {
         if ($this->getOrderNumber() == null) {
@@ -174,5 +180,15 @@ class Achievement
     function setLastOrderNumberModification($lastOrderNumberModification)
     {
         $this->lastOrderNumberModification = $lastOrderNumberModification;
+    }
+
+    function getImages()
+    {
+        return $this->images;
+    }
+
+    function setImages(array $images)
+    {
+        $this->images = $images;
     }
 }
