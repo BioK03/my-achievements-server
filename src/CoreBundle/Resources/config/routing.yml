@@ -2,7 +2,7 @@ core_homepage:
     path:     /
     defaults: { _controller: CoreBundle:Default:index }
 
-deleteUnusedFile:
+delete_unused_file:
     path:     /deleteUnusedFile
     methods: [POST]
     defaults: { _controller: CoreBundle:Default:postDeleteUnusedFile }

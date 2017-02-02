@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class DefaultController extends BaseController
 {
@@ -19,7 +20,7 @@ class DefaultController extends BaseController
      * )
      *
      * @Rest\View(statusCode=Response::HTTP_OK)
-     * @Rest\GET("/")
+     * @Rest\Get("/")
      */
     public function indexAction()
     {
