@@ -12,7 +12,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use CoreBundle\Form\Type\UserType;
 use CoreBundle\Entity\User;
 use CoreBundle\Entity\Credentials;
-use CoreBundle\Controller\BaseController;
+use CoreBundle\Entity\File;
 use CoreBundle\Form\Type\CredentialsType;
 use CoreBundle\Controller\BaseController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
