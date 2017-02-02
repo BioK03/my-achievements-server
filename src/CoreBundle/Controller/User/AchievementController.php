@@ -12,6 +12,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use CoreBundle\Form\Type\AchievementType;
 use CoreBundle\Entity\Achievement;
 use CoreBundle\Controller\BaseController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class AchievementController extends BaseController
 {

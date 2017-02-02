@@ -14,6 +14,7 @@ use CoreBundle\Entity\User;
 use CoreBundle\Entity\Credentials;
 use CoreBundle\Form\Type\CredentialsType;
 use CoreBundle\Controller\BaseController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UserController extends BaseController
 {
