@@ -49,7 +49,8 @@ class User implements UserInterface
     protected $plainPassword;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\OneToOne(targetEntity="File", cascade={"remove"})
+     * @var File
      */
     protected $profilePicture;
 
@@ -182,5 +183,14 @@ class User implements UserInterface
             $total += $t->getAchievements()->count();
         }
         $this->setNbAchievements($total);
+    }
+
+    public function getProfilePictureWebPath()
+    {
+        if ($this->getProfilePicture() != null) {
+            return $this->getProfilePicture()->getWebPath();
+        } else {
+            return null;
+        }
     }
 }

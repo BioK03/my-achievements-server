@@ -266,4 +266,37 @@ class UserController extends BaseController
             return $form;
         }
     }
+
+    /**
+     * Upload the profile picture of a user
+     * Return :
+     * ['paths' => array of path]
+     *
+     * @ApiDoc(
+     *  description="Upload the profile picture of a user",
+     *  section="2-Users"
+     * )
+     *
+     * @Rest\Post("/users/{user_id}/upload")
+     */
+    public function postUserUploadAction(Request $request)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+        $user = $em->getRepository('CoreBundle:User')->find($request->get('user_id'));
+        if (empty($user)) {
+            return $this->userNotFound();
+        }
+        $files = $request->files;
+        $paths = [];
+        foreach ($files as $upFile) {
+            if ($user->getProfilePicture() == null) {
+                $file = new File();
+                $user->setProfilePicture($file);
+            }
+            $file->setFile($upFile);
+            $em->flush();
+            $paths[] = $file->getWebPath();
+        }
+        return \FOS\RestBundle\View\View::create(['paths' => $paths], Response::HTTP_OK);
+    }
 }

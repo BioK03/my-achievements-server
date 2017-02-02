@@ -287,4 +287,44 @@ class AchievementController extends BaseController
             $i++;
         }
     }
+
+    /**
+     * Upload all the images of a achivement. REMOVE all the old ones !
+     * Return :
+     * ['paths' => array of path]
+     *
+     * @ApiDoc(
+     *  description="Upload all the images of a achivement. REMOVE all the old ones !",
+     *  section="4-Achievements"
+     * )
+     *
+     * @Rest\Post("/users/{user_id}/tabs/{tab_id}/achievements/{achievement_id}/upload")
+     */
+    public function postAchievementUploadAction(Request $request)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+        $achievement = $em->getRepository('CoreBundle:Achievement')->find($request->get('achievement_id'));
+        if (empty($achievement)) {
+            return $this->achievementNotFound();
+        }
+        if ($achievement->getTab()->getUser()->getId() != $request->get('user_id')) {
+            return $this->userNotCorrect();
+        }
+        if ($achievement->getTab()->getId() != $request->get('tab_id')) {
+            return $this->tabNotCorrect();
+        }
+        $files = $request->files;
+        $paths = [];
+        foreach ($achievement->getImages() as $img) {
+            $em->remove($img);
+        }
+        foreach ($files as $upFile) {
+            $file = new File();
+            $file->setAchievement($achievement);
+            $file->setFile($upFile);
+            $em->flush();
+            $paths[] = $file->getWebPath();
+        }
+        return \FOS\RestBundle\View\View::create(['paths' => $paths], Response::HTTP_OK);
+    }
 }
