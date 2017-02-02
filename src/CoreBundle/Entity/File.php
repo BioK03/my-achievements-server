@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="files")
  *
  * @ORM\Entity(repositoryClass="CoreBundle\Repository\FileRepository" )
- * @ORM\HasLifecycleCallbacks
+ * @ORM\HasLifecycleCallbacks()
  */
 class File
 {
@@ -80,6 +80,7 @@ class File
      */
     public function preUpload()
     {
+        $this->setDescription("test");
         if (null != $this->getFile()) {
             $this->path = $this->createName($this->getFile(), $this->getFile()->getClientOriginalName());
             $this->description = $this->getDescription().' Original name : '.$this->file->getClientOriginalName();
