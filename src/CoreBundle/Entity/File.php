@@ -80,7 +80,7 @@ class File
      */
     public function preUpload()
     {
-        $this->setDescription("test");
+        $this->setDescription($this->getFile()->getClientOriginalName());
         if (null != $this->getFile()) {
             $this->path = $this->createName($this->getFile(), $this->getFile()->getClientOriginalName());
             $this->description = $this->getDescription().' Original name : '.$this->file->getClientOriginalName();
