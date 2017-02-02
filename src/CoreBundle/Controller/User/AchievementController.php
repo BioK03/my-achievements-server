@@ -265,7 +265,7 @@ class AchievementController extends BaseController
         if ($form->isValid()) {
             if ($achievement->getImages() != $oldImages) {
                 foreach ($oldImages as $img) {
-                    unlink(__DIR__.'/../../../web/uploads'.basename($img));
+                    unlink(__DIR__.'/../../../web/uploads/'.basename($img));
                 }
             }
             $em = $this->get('doctrine.orm.entity_manager');
