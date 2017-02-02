@@ -2,7 +2,7 @@ CoreBundle\Entity\User:
     exclusion_policy: none
     virtual_properties:
         getProfilePictureWebPath:
-            serialized_name: profilePicture
+            serialized_name: profilePicturePath
             type: string
             groups: ['user', 'tab', 'achievement', 'post', 'search']
     properties:
@@ -18,5 +18,7 @@ CoreBundle\Entity\User:
             groups: ['post']
         tabs:
             groups: ['user']
+        profilePicture:
+            exclude: true
         nbAchievements:
             groups: ['user', 'tab', 'achievement', 'post']
