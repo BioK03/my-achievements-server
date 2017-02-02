@@ -62,8 +62,8 @@ class Achievement
     protected $lastOrderNumberModification;
 
     /**
-     * @ORM\OneToMany(targetEntity="File", mappedBy="achievement", cascade={"remove"})
-     * @var File[]
+     * @ORM\Column(type="array")
+     * @var String[]
      */
     protected $images;
 
@@ -83,6 +83,9 @@ class Achievement
         }
         if ($orderNumberHasChanged) {
             $this->lastOrderNumberModification();
+        }
+        if ($this->getImages() == null) {
+            $this->setImages([]);
         }
         $this->getTab()->getUser()->calculNbAchievements();
     }

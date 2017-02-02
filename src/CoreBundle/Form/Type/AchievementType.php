@@ -17,6 +17,11 @@ class AchievementType extends AbstractType
         $builder->add('shortdesc');
         $builder->add('longdesc');
         $builder->add('favorite');
+        $builder->add('images', CollectionType::class, [
+            'entry_type' => \Symfony\Component\Form\Extension\Core\Type\TextType::class,
+            'allow_add' => true,
+            'error_bubbling' => false,
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

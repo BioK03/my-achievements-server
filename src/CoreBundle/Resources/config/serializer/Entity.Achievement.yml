@@ -15,6 +15,8 @@ CoreBundle\Entity\Achievement:
             groups: ['tab', 'user', 'post', 'achievement']
         favorite:
             groups: ['tab', 'user', 'post', 'achievement']
+        images:
+            groups: ['tab', 'user', 'post', 'achievement']
         tab:
             groups: ['achievement']
 

@@ -28,15 +28,48 @@ class DefaultController extends BaseController
 
     /**
      *
-     * @Rest\Get("/debug/{user_id}")
+     * @Rest\Post("/deleteUnusedFile")
      */
-    public function getDebugAction(Request $request)
+    public function postDeleteUnusedFile(Request $request)
     {
         $em = $this->get('doctrine.orm.entity_manager');
-        $user = $em->getRepository('CoreBundle:User')
-                ->findOneById($request->get('user_id'));
-        $user->calculNbAchievements();
-        $em->flush();
-        return $this->ok('debug');
+        $files = $em->getRepository('CoreBundle:User')
+                ->getAllFiles();
+        array_merge($files, $em->getRepository('CoreBundle:Achievement')->getAllFiles());
+        $serverFiles = scandir("http://localhost:8100/uploads/");
+        return \FOS\RestBundle\View\View::create(['files' => $files, 'serverFiles' => $serverFiles], Response::HTTP_OK);
+    }
+
+    /**
+     * Upload a file on the server
+     * Return :
+     * ['paths' => array of path]
+     *
+     * @ApiDoc(
+     *  description="Upload a file on the server",
+     *  section="0-Default"
+     * )
+     *
+     * @Rest\Post("/upload")
+     */
+    public function postTestAction(Request $request)
+    {
+        $files = $request->files;
+        $paths = [];
+        foreach ($files as $file) {
+            $paths[] = 'http://localhost:8100/uploads/'.$this->upload($file, $file->getCLientOriginalName());
+        }
+        return \FOS\RestBundle\View\View::create(['paths' => $paths], Response::HTTP_OK);
+    }
+
+    public function upload(UploadedFile $file, $name)
+    {
+        $parts = explode(".", $name);
+
+        $fileName = md5(uniqid()).'.'.$parts[count($parts) - 1];
+
+        $file->move(__DIR__.'/../../../web/uploads', $fileName);
+
+        return $fileName;
     }
 }

@@ -19,6 +19,8 @@ CoreBundle\Entity\User:
                 max: 50
         tabs:
             - Valid: ~
+        profilePicture:
+            - Type: string
 
 CoreBundle\Entity\Tab:
     properties:
@@ -49,6 +51,8 @@ CoreBundle\Entity\Achievement:
             - Type: string
         longdesc:
             - Type: string
+        images:
+            - Type: array
 
 CoreBundle\Entity\Credentials:
     properties:

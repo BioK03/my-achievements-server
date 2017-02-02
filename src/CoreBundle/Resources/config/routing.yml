@@ -2,10 +2,15 @@ core_homepage:
     path:     /
     defaults: { _controller: CoreBundle:Default:index }
 
-debug:
-    path:     /debug/{user_id}
-    methods: [GET]
-    defaults: { _controller: CoreBundle:Default:getDebug }
+deleteUnusedFile:
+    path:     /deleteUnusedFile
+    methods: [POST]
+    defaults: { _controller: CoreBundle:Default:postDeleteUnusedFile }
+
+upload:
+    path:     /upload
+    methods: [POST]
+    defaults: { _controller: CoreBundle:Default:postUpload }
 
 post_login:
     path:     /login
