@@ -75,8 +75,8 @@ class File
     }
 
     /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
      */
     public function preUpload()
     {
@@ -99,8 +99,8 @@ class File
     }
 
     /**
-     * @ORM\PostPersist()
-     * @ORM\PostUpdate()
+     * @ORM\PostPersist
+     * @ORM\PostUpdate
      */
     public function upload(LifecycleEventArgs $event)
     {
@@ -128,7 +128,7 @@ class File
 
     /**
      * This function remove the physical file after the virtual file has been removed from the database
-     * @ORM\PostRemove()
+     * @ORM\PostRemove
      */
     public function removePhysicalFile(LifecycleEventArgs $event)
     {
