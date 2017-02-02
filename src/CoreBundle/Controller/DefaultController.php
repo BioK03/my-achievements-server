@@ -35,16 +35,29 @@ class DefaultController extends BaseController
      *  section="0-Default"
      * )
      *
-     * @Rest\Post("/del")
+     * @Rest\Post("/deleteunusedfile")
      */
-    public function postDeleteUnusedFile(Request $request)
+    public function postDeleteUnusedFileAction(Request $request)
     {
         $em = $this->get('doctrine.orm.entity_manager');
-        $files = $em->getRepository('CoreBundle:User')
-                ->getAllFiles();
-        array_merge($files, $em->getRepository('CoreBundle:Achievement')->getAllFiles());
-        $serverFiles = scandir("http://localhost:8100/uploads/");
-        return \FOS\RestBundle\View\View::create(['files' => $files, 'serverFiles' => $serverFiles], Response::HTTP_OK);
+        $res = $em->getRepository('CoreBundle:User')->getAllFiles();
+        $files = [];
+        foreach ($res as $re) {
+            if ($re['profilePicture'] != null) {
+                $files[] = $re['profilePicture'];
+            }
+        }
+
+        $res = $em->getRepository('CoreBundle:Achievement')->getAllFiles();
+        foreach ($res as $re) {
+            foreach ($re['images'] as $img) {
+                if ($img != null) {
+                    $files[] = $img;
+                }
+            }
+        }
+        $serverFiles = scandir(__DIR__.'/../../../web/uploads');
+        return \FOS\RestBundle\View\View::create(['files' => $files, 'serverFiles' => $serverFiles, 'test' => basename($files[0])], Response::HTTP_OK);
     }
 
     /**

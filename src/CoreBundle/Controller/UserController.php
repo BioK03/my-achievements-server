@@ -253,11 +253,15 @@ class UserController extends BaseController
             return $this->userNotFound();
         }
 
+        $oldProfilePicture = $user->getProfilePicture();
         $form = $this->createForm(UserType::class, $user);
 
         $form->submit($request->request->all(), $clearMissing);
 
         if ($form->isValid()) {
+            if ($user->getProfilePicture() != $oldProfilePicture) {
+                unlink($oldProfilePicture);
+            }
             $em = $this->get('doctrine.orm.entity_manager');
             $user->calculNbAchievements();
             $em->flush();

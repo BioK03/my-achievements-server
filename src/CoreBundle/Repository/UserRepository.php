@@ -20,4 +20,10 @@ class UserRepository extends EntityRepository
         }
         return $this->getEntityManager()->createQuery($query)->getResult();
     }
+
+    public function getAllFiles()
+    {
+        $query = "SELECT u.profilePicture FROM CoreBundle:User u ";
+        return $this->getEntityManager()->createQuery($query)->getResult();
+    }
 }

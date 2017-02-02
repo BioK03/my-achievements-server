@@ -110,6 +110,8 @@ class AchievementController extends BaseController
         if ($achievement->getTab()->getId() != $request->get('tab_id')) {
             return $this->tabNotCorrect();
         }
+        $achievement->setImages(['http://localhost:8100/uploads/test.txt']);
+        $this->get('doctrine.orm.entity_manager')->flush();
         return $achievement;
     }
 
@@ -254,11 +256,18 @@ class AchievementController extends BaseController
         }
 
         $oldOrderNumber = $achievement->getOrderNumber();
+        $oldImages = $achievement->getImages();
+        $achievement->setImages([]);
         $form = $this->createForm(AchievementType::class, $achievement);
 
         $form->submit($request->request->all(), $clearMissing);
 
         if ($form->isValid()) {
+            if ($achievement->getImages() != $oldImages) {
+                foreach ($oldImages as $img) {
+                    unlink($img);
+                }
+            }
             $em = $this->get('doctrine.orm.entity_manager');
             $achievement->defaultValues($oldOrderNumber != $achievement->getOrderNumber());
             $em->flush();
@@ -266,6 +275,7 @@ class AchievementController extends BaseController
             $em->flush();
             return $achievement;
         } else {
+            $achievement->setImages($oldImages);
             return $form;
         }
     }
