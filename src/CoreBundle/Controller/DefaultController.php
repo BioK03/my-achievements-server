@@ -16,7 +16,7 @@ class DefaultController extends BaseController
     /** Default
      * @ApiDoc(
      *  description="Default",
-     *  section=" 0-Default"
+     *  section="0-Default"
      * )
      *
      * @Rest\View(statusCode=Response::HTTP_OK)
@@ -28,6 +28,12 @@ class DefaultController extends BaseController
     }
 
     /**
+     * Delete all unused files
+     *
+     * @ApiDoc(
+     *  description="Delete all unused files",
+     *  section="0-Default"
+     * )
      *
      * @Rest\Post("/deleteUnusedFile")
      */

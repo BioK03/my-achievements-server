@@ -5,6 +5,8 @@ namespace CoreBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class AchievementType extends AbstractType
 {
@@ -18,7 +20,7 @@ class AchievementType extends AbstractType
         $builder->add('longdesc');
         $builder->add('favorite');
         $builder->add('images', CollectionType::class, [
-            'entry_type' => \Symfony\Component\Form\Extension\Core\Type\TextType::class,
+            'entry_type' => TextType::class,
             'allow_add' => true,
             'error_bubbling' => false,
         ]);
