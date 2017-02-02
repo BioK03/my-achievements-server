@@ -294,8 +294,10 @@ class UserController extends BaseController
             if ($user->getProfilePicture() == null) {
                 $file = new File();
                 $user->setProfilePicture($file);
+                $em->persist($file);
             }
             $file->setFile($upFile);
+            $em->persist($file);
             $em->flush();
             $paths[] = $file->getWebPath();
         }

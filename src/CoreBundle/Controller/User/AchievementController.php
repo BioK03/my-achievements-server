@@ -322,6 +322,7 @@ class AchievementController extends BaseController
         }
         foreach ($files as $upFile) {
             $file = new File();
+            $em->persist($file);
             $file->setAchievement($achievement);
             $file->setFile($upFile);
             $em->flush();
