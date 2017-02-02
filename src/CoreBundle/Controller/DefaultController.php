@@ -35,7 +35,7 @@ class DefaultController extends BaseController
      *  section="0-Default"
      * )
      *
-     * @Rest\Post("/deleteUnusedFile")
+     * @Rest\Post("/del")
      */
     public function postDeleteUnusedFile(Request $request)
     {
@@ -64,7 +64,7 @@ class DefaultController extends BaseController
         $files = $request->files;
         $paths = [];
         foreach ($files as $file) {
-            $paths[] = 'http://localhost:8100/uploads/'.$this->upload($file, $file->getCLientOriginalName());
+            $paths[] = 'uploads/'.$this->upload($file, $file->getCLientOriginalName());
         }
         return \FOS\RestBundle\View\View::create(['paths' => $paths], Response::HTTP_OK);
     }
