@@ -77,8 +77,6 @@ class File
 
         $fileName = md5(uniqid()).'.'.$parts[count($parts) - 1];
 
-        $file->move(__DIR__.'/../../../web', $fileName);
-
         return $fileName;
     }
 
