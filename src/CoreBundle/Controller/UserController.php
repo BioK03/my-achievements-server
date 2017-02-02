@@ -260,6 +260,7 @@ class UserController extends BaseController
 
         if ($form->isValid()) {
             if ($user->getProfilePicture() != $oldProfilePicture) {
+                return \FOS\RestBundle\View\View::create(['old' => $oldProfilePicture, "basename" => basename($oldProfilePicture)], Response::HTTP_OK);
                 unlink(__DIR__.'/../../../web/uploads/'.basename($oldProfilePicture));
             }
             $em = $this->get('doctrine.orm.entity_manager');

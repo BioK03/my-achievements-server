@@ -110,8 +110,6 @@ class AchievementController extends BaseController
         if ($achievement->getTab()->getId() != $request->get('tab_id')) {
             return $this->tabNotCorrect();
         }
-        $achievement->setImages(['http://localhost:8100/uploads/test.txt']);
-        $this->get('doctrine.orm.entity_manager')->flush();
         return $achievement;
     }
 
