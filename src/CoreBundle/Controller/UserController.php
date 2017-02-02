@@ -291,12 +291,14 @@ class UserController extends BaseController
         $files = $request->files;
         $paths = [];
         foreach ($files as $upFile) {
-            if ($user->getProfilePicture() == null) {
-                $file = new File();
-                $user->setProfilePicture($file);
-                $em->persist($file);
+            if ($user->getProfilePicture() != null) {
+                $em->remove($user->getProfilePicture());
             }
+            $file = new File();
+            $user->setProfilePicture($file);
+            $em->persist($file);
             $file->setFile($upFile);
+            $file->defaultValues();
             $em->flush();
             $paths[] = $file->getWebPath();
         }

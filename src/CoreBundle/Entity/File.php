@@ -48,11 +48,6 @@ class File
     private $file;
 
     /**
-     * temporary file name used during the delete of the file.
-     */
-    private $tempFilename;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Achievement", inversedBy="images")
      * @var Achievement
      */
@@ -66,24 +61,13 @@ class File
     public function setFile(UploadedFile $file)
     {
         $this->file = $file;
-
-        if (null !== $this->path) {
-            $this->tempFilename = $this->path;
-            $this->path = null;
-            $this->description = null;
-        }
     }
 
-    /**
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
-     */
-    public function preUpload()
+    public function defaultValues()
     {
-        $this->setDescription($this->getFile()->getClientOriginalName());
         if (null != $this->getFile()) {
             $this->path = $this->createName($this->getFile(), $this->getFile()->getClientOriginalName());
-            $this->description = $this->getDescription().' Original name : '.$this->file->getClientOriginalName();
+            $this->description = $this->getDescription().' Original name : '.$this->getFile()->getClientOriginalName();
         }
     }
 
@@ -104,25 +88,7 @@ class File
      */
     public function upload(LifecycleEventArgs $event)
     {
-        if (null === $this->getFile())
-            return;
-
-        // If there was an old file.
-        if (null !== $this->tempFilename) {
-            $oldFile = $this->getUploadRootDir().'/'.$this->tempFilename;
-            if (file_exists($oldFile)) {
-                $em = $event->getEntityManager();
-                $repository = $em->getRepository(get_class($this));
-
-                if ($repository->isNotUsed($this->tempFilename)) {
-                    unlink($oldFile);
-                }
-                $this->tempFilename = null;
-            }
-        }
-
         $this->getFile()->move($this->getUploadRootDir(), $this->path);
-
         $this->file = null;
     }
 
