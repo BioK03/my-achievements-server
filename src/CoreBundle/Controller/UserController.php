@@ -297,7 +297,8 @@ class UserController extends BaseController
                 $em->persist($file);
             }
             $file->setFile($upFile);
-            return \FOS\RestBundle\View\View::create(['debug' => $file->getFile() != null], Response::HTTP_OK);
+            $file->preUpload();
+            return \FOS\RestBundle\View\View::create(['debug' => $file->getPath()], Response::HTTP_OK);
             $em->flush();
             $paths[] = $file->getWebPath();
         }
