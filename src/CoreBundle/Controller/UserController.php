@@ -74,6 +74,7 @@ class UserController extends BaseController
                         'shortdesc' => $a->getShortdesc(),
                         'longdesc' => $a->getLongdesc(),
                         'favorite' => $a->getFavorite(),
+                        'images' => $a->getImages()
                     ];
                 }
                 $ret['tabs'][] = $tab;
@@ -117,7 +118,7 @@ class UserController extends BaseController
             $encoder = $this->get('security.password_encoder');
             $encoded = $encoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($encoded);
-            $user->calculNbAchievements();
+            $user->defaultValues();
             $em->persist($user);
             $em->flush();
             return $user;
@@ -259,11 +260,11 @@ class UserController extends BaseController
         $form->submit($request->request->all(), $clearMissing);
 
         if ($form->isValid()) {
-            if ($user->getProfilePicture() != $oldProfilePicture && $oldProfilePicture != null) {
+            if ($user->getProfilePicture() != $oldProfilePicture && $oldProfilePicture != "") {
                 unlink(__DIR__.'/../../../web/uploads/'.basename($oldProfilePicture));
             }
             $em = $this->get('doctrine.orm.entity_manager');
-            $user->calculNbAchievements();
+            $user->defaultValues();
             $em->flush();
             return $user;
         } else {

@@ -61,6 +61,14 @@ class User implements UserInterface
      */
     protected $tabs;
 
+    public function defaultValues()
+    {
+        if ($this->getProfilePicture() == null) {
+            $this->setProfilePicture("");
+        }
+        $this->calculNbAchievements();
+    }
+
     function getProfilePicture()
     {
         return $this->profilePicture;

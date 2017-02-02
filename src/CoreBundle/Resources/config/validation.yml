@@ -62,3 +62,5 @@ CoreBundle\Entity\Credentials:
         password:
             - NotBlank: ~
             - Type: string
+            - Length:
+                min: 2
