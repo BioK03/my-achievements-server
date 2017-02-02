@@ -1,5 +1,10 @@
 CoreBundle\Entity\User:
     exclusion_policy: none
+    virtual_properties:
+        getProfilePictureWebPath:
+            serialized_name: profilePicture
+            type: string
+            groups: ['user', 'tab', 'achievement', 'post', 'search']
     properties:
         id:
             groups: ['user', 'tab', 'achievement', 'search']
@@ -13,9 +18,5 @@ CoreBundle\Entity\User:
             groups: ['post']
         tabs:
             groups: ['user']
-        profilePicture:
-            accessor:
-                getter: getProfilePictureWebPath
-            groups: ['user', 'tab', 'achievement', 'post', 'search']
         nbAchievements:
             groups: ['user', 'tab', 'achievement', 'post']
