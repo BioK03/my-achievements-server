@@ -27,6 +27,16 @@ get_connected:
     methods: [GET]
     defaults: { _controller: CoreBundle:Security:getConnected }
 
+get_google:
+    path:     /googleredirect
+    methods: [GET]
+    defaults: { _controller: CoreBundle:Security:getGoogleRedirect }
+
+post_google:
+    path:     /googlelogin
+    methods: [POST]
+    defaults: { _controller: CoreBundle:Security:postGoogleLogin }
+
 users:
     type:     rest
     resource: CoreBundle\Controller\UserController
