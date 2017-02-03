@@ -165,7 +165,7 @@ class SecurityController extends BaseController
     {
 
         $client = new Google_Client();
-        $client->setAuthConfigFile('client_secrets.json');
+        $client->setAuthConfigFile(__DIR__.'/../Security/client_id.json');
         $client->addScope('profile');
 
         $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
