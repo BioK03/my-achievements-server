@@ -12,7 +12,7 @@ CoreBundle\Entity\User:
             - NotBlank: ~
             - Email: ~
         plainPassword:
-            - NotBlank: { groups: [New, FullUpdate] }
+            - NotBlank: { groups: [FullUpdate] }
             - Type: string
             - Length:
                 min: 4
@@ -63,4 +63,4 @@ CoreBundle\Entity\Credentials:
             - NotBlank: ~
             - Type: string
             - Length:
-                min: 2
+                min: 4

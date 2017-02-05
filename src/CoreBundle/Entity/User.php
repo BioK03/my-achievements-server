@@ -43,7 +43,7 @@ class User implements UserInterface
     protected $nbAchievements;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $password;
     protected $plainPassword;

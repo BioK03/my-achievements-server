@@ -83,7 +83,7 @@ class DefaultController extends BaseController
         $paths = [];
         foreach ($files as $file) {
             if (!strstr($file->getClientMimeType(), "image")) {
-                return \FOS\RestBundle\View\View::create(['message' => "The file must be an image"], Response::HTTP_UNPROCESSABLE_ENTITY);
+                return \FOS\RestBundle\View\View::create(['message' => "The file must be an image", "type" => $file->getClientMimeType()], Response::HTTP_UNPROCESSABLE_ENTITY);
             }
             if ($file->getClientSize() > 1999000) {
                 return \FOS\RestBundle\View\View::create(['message' => "The file is too big"], Response::HTTP_UNPROCESSABLE_ENTITY);
