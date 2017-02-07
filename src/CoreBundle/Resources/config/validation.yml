@@ -1,0 +1,66 @@
+CoreBundle\Entity\User:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: email
+    properties:
+        firstname:
+            - NotBlank: ~
+            - Type: string
+        lastname:
+            - NotBlank: ~
+            - Type: string
+        email:
+            - NotBlank: ~
+            - Email: ~
+        plainPassword:
+            - NotBlank: { groups: [FullUpdate] }
+            - Type: string
+            - Length:
+                min: 4
+                max: 50
+        tabs:
+            - Valid: ~
+        profilePicture:
+            - Type: string
+
+CoreBundle\Entity\Tab:
+    properties:
+        name:
+            - NotBlank: ~
+            - Type: string
+        color:
+            - Type: string
+        orderNumber:
+            - Type: integer
+        icon:
+            - Type: string
+        achievements:
+            - Valid: ~
+
+CoreBundle\Entity\Achievement:
+    properties:
+        name:
+            - NotBlank: ~
+            - Type: string
+        orderNumber:
+            - Type: integer
+        icon:
+            - Type: string
+        favorite:
+            - Type: bool
+        shortdesc:
+            - Type: string
+        longdesc:
+            - Type: string
+        images:
+            - Type: array
+
+CoreBundle\Entity\Credentials:
+    properties:
+        login:
+            - NotBlank: ~
+            - Type: string
+        password:
+            - NotBlank: ~
+            - Type: string
+            - Length:
+                min: 4

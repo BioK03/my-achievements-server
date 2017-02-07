@@ -1,0 +1,23 @@
+CoreBundle\Entity\Achievement:
+    exclusion_policy: none
+    properties:
+        id:
+            groups: ['tab', 'user', 'achievement']
+        name:
+            groups: ['tab', 'user', 'post', 'achievement']
+        orderNumber:
+            groups: ['tab', 'user', 'post', 'achievement']
+        icon:
+            groups: ['tab', 'user', 'post', 'achievement']
+        shortdesc:
+            groups: ['tab', 'user', 'post', 'achievement']
+        longdesc:
+            groups: ['tab', 'user', 'post', 'achievement']
+        favorite:
+            groups: ['tab', 'user', 'post', 'achievement']
+        images:
+            groups: ['tab', 'user', 'post', 'achievement']
+        tab:
+            groups: ['achievement']
+
+

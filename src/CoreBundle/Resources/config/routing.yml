@@ -1,0 +1,60 @@
+core_homepage:
+    path:     /
+    defaults: { _controller: CoreBundle:Default:index }
+
+delete_unused_files:
+    path:     /deleteunusedfiles
+    methods: [POST]
+    defaults: { _controller: CoreBundle:Default:postDeleteUnusedFile }
+
+upload:
+    path:     /upload
+    methods: [POST]
+    defaults: { _controller: CoreBundle:Default:postUpload }
+
+post_login:
+    path:     /login
+    methods: [POST]
+    defaults: { _controller: CoreBundle:Security:postLogin }
+
+post_logout:
+    path:     /logout
+    methods: [DELETE]
+    defaults: { _controller: CoreBundle:Security:deleteLogout }
+
+get_connected:
+    path:     /connected
+    methods: [GET]
+    defaults: { _controller: CoreBundle:Security:getConnected }
+
+get_google_redirect:
+    path:     /googleredirect
+    methods: [GET]
+    defaults: { _controller: CoreBundle:Security:getGoogleRedirect }
+
+get_google_login:
+    path:     /googlelogin
+    methods: [GET]
+    defaults: { _controller: CoreBundle:Security:getGoogleLogin }
+
+get_linkedin_redirect:
+    path:     /linkedinredirect
+    methods: [GET]
+    defaults: { _controller: CoreBundle:Security:getLinkedinRedirect }
+
+get_linkedin_login:
+    path:     /linkedinlogin
+    methods: [GET]
+    defaults: { _controller: CoreBundle:Security:getLinkedinLogin }
+
+users:
+    type:     rest
+    resource: CoreBundle\Controller\UserController
+
+tabs:
+    type:     rest
+    resource: CoreBundle\Controller\User\TabController
+
+achievements:
+    type:     rest
+    resource: CoreBundle\Controller\User\AchievementController

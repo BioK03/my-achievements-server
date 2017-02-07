@@ -1,0 +1,19 @@
+CoreBundle\Entity\User:
+    exclusion_policy: none
+    properties:
+        id:
+            groups: ['user', 'tab', 'achievement', 'search']
+        firstname:
+            groups: ['user', 'tab', 'post', 'achievement', 'search']
+        lastname:
+            groups: ['user', 'tab', 'post', 'achievement', 'search']
+        email:
+            groups: ['user', 'tab', 'post', 'achievement', 'search']
+        plainPassword:
+            groups: ['post']
+        tabs:
+            groups: ['user']
+        profilePicture:
+            groups: ['user', 'tab', 'achievement', 'post', 'search']
+        nbAchievements:
+            groups: ['user', 'tab', 'achievement', 'post']
